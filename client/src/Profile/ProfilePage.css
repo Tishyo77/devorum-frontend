@@ -1,0 +1,111 @@
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: rgb(255, 255, 255);
+}
+ 
+.profile-page .content {
+  display: flex;
+  flex: 1;
+  margin-top: 60px; 
+  margin-left: 250px; 
+}
+
+.profile-page .profile-container {
+  flex: 1;
+  padding: 50px;
+  overflow-y: auto; 
+}
+
+.profile-page .profile-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-page .profile-picture {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 20px;
+}
+
+.profile-page .profile-picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-page .profile-info {
+  flex-grow: 1;
+}
+
+.profile-page .skills-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.profile-page .skills {
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.profile-page .certifications {
+  flex: 1;
+}
+
+.profile-page .skills h3,
+.profile-page .certifications h3 {
+  margin-bottom: 20px;
+}
+
+.profile-page .skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 20px;
+  border: 1px solid #000000;
+  border-radius: 10px;
+}
+
+.profile-page .skill {
+  background-color: #007bff;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.profile-page .certifications-list {
+  display: flex;
+  flex-direction: column; /* Ensure certifications are in a column */
+  gap: 10px;
+  padding: 20px;
+  border: 1px solid #000000;
+  border-radius: 10px;
+}
+
+.profile-page .certification {
+  display: flex;
+  justify-content: space-between; /* Ensure button is aligned to the right */
+  align-items: center;
+  width: 100%; /* Make each certification cover the entire width */
+  background-color: #f1f1f1;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.profile-page .certification-name {
+  margin-right: 10px;
+}
+
+.profile-page .verify-button {
+  background-color: #007bff;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+}

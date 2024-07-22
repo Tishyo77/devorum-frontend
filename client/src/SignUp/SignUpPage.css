@@ -1,0 +1,248 @@
+.signup-page {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
+}
+
+.signup-page h2 {
+  text-align: center;
+  margin-top: 2%;
+  font-family: 'Poppins', sans-serif;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  margin: 3%;
+  margin-top: 10px;
+  margin-bottom: 0%;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #ccc;
+}
+
+.logo {
+  display: flex;
+  width: 20%;
+}
+
+.logo img {
+  width: 200px;
+}
+
+.signup-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 5%;
+  margin-top: 20px;
+  padding: 40px;
+  background-color: #f6f6f6;
+  border-radius: 10px;
+}
+
+.signup-part {
+  width: 100%;
+}
+
+.signup-part p {
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.25rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.form-group.error input {
+  border: 1px solid red;
+}
+
+.error-message {
+  color: red;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+
+button {
+  padding: 0.75rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.google-button {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%; /* Make the button full width */
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.google-button:hover {
+  background-color: #357ae8;
+}
+
+.or-divider {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.login-prompt {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.login-prompt a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.login-prompt a:hover {
+  text-decoration: underline;
+}
+
+.suggestions {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  color: black;
+  max-height: 150px;
+  overflow-y: auto;
+  margin-top: 0.5rem;
+  position: absolute;
+  width: calc(100% - 10px); /* Adjust width to match input field */
+  z-index: 1000; /* Ensure suggestions appear above other elements */
+}
+
+.suggestion {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.suggestion:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.selected-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.selected-skill {
+  background-color: #007bff;
+  color: white;
+  padding: 5px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.selected-skill button {
+  background: none;
+  border: none;
+  color: white;
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.selected-skill button:hover {
+  color: red;
+}
+
+/* Styles for avatar selection */
+.profile-avatar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.selected-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid #007bff;
+}
+
+.choose-avatar-button {
+  display: block;
+  margin: 0 auto;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.choose-avatar-button:hover {
+  background-color: #0056b3;
+}
+
+.avatar-selection-window {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.avatar-selection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.avatar:hover {
+  border-color: #007bff;
+}

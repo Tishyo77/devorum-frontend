@@ -1,0 +1,36 @@
+.side-bar {
+  position: fixed; 
+  top: 70px; 
+  left: 0;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  height: calc(100% - 60px); 
+  width: 250px; 
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000; 
+}
+
+.side-bar .side-bar-button {
+  background: none;
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 10px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-bottom: 5px;
+}
+
+.side-bar .side-bar-button:hover {
+  background-color: #555;
+  color: #ffffff;
+}
+
+.forums {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
