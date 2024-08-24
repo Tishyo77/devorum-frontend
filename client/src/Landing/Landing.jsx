@@ -1,5 +1,6 @@
 import React from 'react';
 import './Landing.css'; 
+import { useNavigate } from 'react-router-dom';
 import Collab1 from '../assets/Collab1.jpg';
 import Collab2 from '../assets/Collab2.jpg';
 import Collab3 from '../assets/Collab3.jpg';
@@ -13,6 +14,7 @@ import CollaborateIcon from '../assets/Collaborate.png';
 import CreateIcon from '../assets/Create.png'; 
 
 const Landing = () => {
+  const navigate = useNavigate();
   return (
     <div className="landing">
       <div className="navbar">
@@ -20,15 +22,15 @@ const Landing = () => {
           <img src={Logo} alt="Devorum Logo" className="logo-img" />
         </div>
         <div className="nav-links">
-          <button className="login-button">Login</button>
-          <button className="signup-button">Sign Up</button>
+          <button className="login-button" onClick={() => navigate('/login')}>Login</button>
+          <button className="signup-button" onClick={() => navigate('/signup')}>Sign Up</button>
         </div>
       </div>
       <div className="landing-top">
         <header className="header">
           <h1>Connect. Collaborate.<br />Create.</h1>
           <p>Discover Devorum, your platform for effortless collaboration on exciting projects. Whether you're a developer, designer, or creator, connect with like-minded peers to bring ideas to life. Join us to explore new opportunities, build your network, and achieve your goals together. Start your journey with Devorum and elevate your projects today.</p>
-          <button className="get-started">Get started</button>
+          <button className="get-started" onClick={() => navigate('/signup')}>Get started</button>
         </header>
         
         <div className="right-columns">

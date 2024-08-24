@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './SignUpPage.css';
+import api from '../api';
 
 const roles = [
   'Student', 'Professional', 'Freelancer', 'Entrepreneur', 'Academic', 'Hobbyist'
@@ -73,9 +74,29 @@ const SignUpPart2 = ({ nextPart, skipPart }) => {
     setCertifications(newCertifications);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    nextPart();
+    
+    try {
+      const token = localStorage.getItem('token');
+      const storedEmail = localStorage.getItem('signUpEmail');
+      await api.put('/user', {
+        email: storedEmail,
+        update: {
+          roles: formData.role,
+          qualification: formData.qualification,
+          skills_temp: selectedSkills.join(','),
+          certifications: certifications.map(cert => cert.name).join(','),
+        },
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      nextPart();
+    } catch (error) {
+      console.error('An error occurred while updating user details:', error);
+    }
   };
 
   return (

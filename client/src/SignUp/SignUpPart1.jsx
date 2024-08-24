@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './SignUpPage.css';
+import api from '../api';
 
 const SignUpPart1 = ({ nextPart }) => {
   const [formData, setFormData] = useState({
@@ -41,7 +41,7 @@ const SignUpPart1 = ({ nextPart }) => {
       !/[!@#$%^&*]/.test(formData.password)
     ) {
       newErrors.password =
-        'Password must have at least one uppercase character, lowercase character, digit and special character';
+        'Password must have at least one uppercase character, lowercase character, digit, and special character';
     }
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match';
@@ -50,11 +50,23 @@ const SignUpPart1 = ({ nextPart }) => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length === 0) {
-      nextPart();
+      try {
+        localStorage.setItem('signUpEmail', formData.email);
+        const response = await api.post('/user', {
+          name: `${formData.firstName} ${formData.lastName}`,
+          email: formData.email,
+          password: formData.password,
+          user_name: formData.email.split('@')[0],
+        });
+        localStorage.setItem('token', response.data.token); 
+        nextPart(); 
+      } catch (error) {
+        setErrors({ apiError: 'An error occurred during sign-up. Please try again.' });
+      }
     } else {
       setErrors(validationErrors);
     }
@@ -92,6 +104,7 @@ const SignUpPart1 = ({ nextPart }) => {
         </div>
         <button type="submit">Next</button>
       </form>
+      {errors.apiError && <span className="error-message">{errors.apiError}</span>}
       <div className="login-prompt">
         Already a member? <a href="/login">Login</a>
       </div>

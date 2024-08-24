@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import Logo from '../assets/Logo.png';
+import api from '../api';
 import './LoginPage.css';
 
 const LoginPage = () => {
+    const navigate = useNavigate(); 
 
     const [formData, setFormData] = useState({
       email: '',
@@ -10,6 +13,7 @@ const LoginPage = () => {
     });
 
     const [errors, setErrors] = useState({});
+    const [apiError, setApiError] = useState(''); 
 
     const handleChange = (e) => {
       const { name, value } = e.target;
@@ -38,11 +42,27 @@ const LoginPage = () => {
         return newErrors;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const validationErrors = validate();
         if (Object.keys(validationErrors).length === 0) {
-          nextPart();
+          try {
+            const response = await api.post('user/login', {
+              email: formData.email,
+              password: formData.password
+            });
+
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('user', JSON.stringify(response.data.user));
+
+            navigate('/feed');
+          } catch (error) {
+            if (error.response && error.response.status === 400) {
+              setApiError('Email or Password is wrong');
+            } else {
+              setApiError('An error occurred during login. Please try again.');
+            }
+          }
         } else {
           setErrors(validationErrors);
         }
@@ -70,6 +90,7 @@ const LoginPage = () => {
                             {errors.password && <span className="error-message">{errors.password}</span>}
                         </div>
                         <button type="submit">Login</button>
+                        {apiError && <span className="error-message">{apiError}</span>}
                     </form>
                     <div className="signup-prompt">
                         Not a member? <a href="/signup">Sign Up</a>
