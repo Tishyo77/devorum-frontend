@@ -1,47 +1,128 @@
 .top-bar {
-  position: fixed; 
+  position: fixed;
   top: 0;
   width: 100%;
+  height: 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #ffffff;
-  color: rgb(0, 0, 0);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
-  z-index: 1001; 
-  padding-right: 30px;
-  padding-left: 30px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  background-color: #f4f7be;
+  color: #000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgb(150, 150, 150);
+  font-family: 'Montserrat', sans-serif;
+  z-index: 1001;
+  padding: 10px 30px;
 }
 
 .top-bar .logo img {
   width: 175px;
+  cursor: pointer;
 }
 
-.top-bar .search-bar input {
+.search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-type-dropdown {
+  padding: 9.5px;
+  border: 1px solid #000;
+  border-right: none;
+  border-radius: 4px 0 0 4px;
+  background-color: #fff;
+  outline: none;
+}
+
+.search-bar input {
   padding: 8px;
-  border-radius: 4px;
-  border: 1px solid black;
+  border: 1px solid #000;
+  border-left: none;
+  border-radius: 0 4px 4px 0;
   width: 300px;
+  outline: none;
+}
+
+.suggestions-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: calc(100% + 1px);
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1002;
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.suggestion-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
 }
 
 .actions {
   display: flex;
-  gap: 10px;
+  align-items: center;
+  gap: 15px;
 }
 
-.new-idea-button,
 .profile-button {
-  background-color: #007bff;
-  color: rgb(0, 0, 0);
-  border: none;
-  padding: 10px;
-  border-radius: 4px;
+  display: flex;
+  align-items: center;
   cursor: pointer;
 }
 
-.new-idea-button:hover,
-.profile-button:hover {
-  background-color: #0056b3;
+.profile-photo,
+.placeholder-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ddd;
+  object-fit: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #555;
 }
+
+.new-idea-button {
+  display: flex;
+  align-items: center;
+  background-color: #007bff00;
+  color: #000000;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  margin-bottom: 15px;
+  margin-right: 10px;
+}
+
+.new-idea-button:hover {
+  background-color: #b39e0033;
+}
+
+.new-idea-icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 8px;
+}
+

@@ -1,8 +1,9 @@
 .profile-page {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  background-color: rgb(255, 255, 255);
+  height: 100%;
+  background-color: #E5F77D;
+  font-family: 'Montserrat', sans-serif;
 }
  
 .profile-page .content {
@@ -70,10 +71,11 @@
   padding: 20px;
   border: 1px solid #000000;
   border-radius: 10px;
+  background-color: #F4F7BE;
 }
 
 .profile-page .skill {
-  background-color: #007bff;
+  background-color: #1E000E;
   color: white;
   padding: 5px 10px;
   border-radius: 4px;
@@ -81,21 +83,23 @@
 
 .profile-page .certifications-list {
   display: flex;
-  flex-direction: column; /* Ensure certifications are in a column */
+  flex-direction: column; 
   gap: 10px;
   padding: 20px;
   border: 1px solid #000000;
   border-radius: 10px;
+  background-color: #F4F7BE;
 }
 
 .profile-page .certification {
   display: flex;
-  justify-content: space-between; /* Ensure button is aligned to the right */
+  justify-content: space-between; 
   align-items: center;
-  width: 100%; /* Make each certification cover the entire width */
-  background-color: #f1f1f1;
+  width: 100%; 
+  background-color: #F4F7BE;
   padding: 5px 10px;
-  border-radius: 4px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid black;
 }
 
 .profile-page .certification-name {
@@ -103,8 +107,8 @@
 }
 
 .profile-page .verify-button {
-  background-color: #007bff;
-  color: white;
+  background-color: #1E000E;
+  color: rgb(255, 255, 255);
   padding: 5px 10px;
   border-radius: 4px;
   text-decoration: none;

@@ -1,0 +1,109 @@
+/* NewIdeaModal.css */
+.new-idea-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+  }
+  
+  .modal-content h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #333;
+    text-align: center;
+  }
+  
+  .modal-content label {
+    display: block;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .modal-content input,
+  .modal-content textarea,
+  .modal-content select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .modal-content textarea {
+    height: 80px;
+    resize: vertical;
+  }
+  
+  .forum-suggestions {
+    margin-top: 5px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 1002;
+  }
+  
+  .forum-suggestions li {
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+  }
+  
+  .forum-suggestions li:hover {
+    background: #e0e0e0;
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .modal-actions button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .modal-actions button:first-child {
+    background: #999;
+    color: #fff;
+  }
+  
+  .modal-actions button:first-child:hover {
+    background: #777;
+  }
+  
+  .modal-actions button:last-child {
+    background: #007bff;
+    color: #fff;
+  }
+  
+  .modal-actions button:last-child:hover {
+    background: #0056b3;
+  }
+  

@@ -53,7 +53,8 @@ const LoginPage = () => {
             });
 
             localStorage.setItem('token', response.data.token);
-            localStorage.setItem('user', JSON.stringify(response.data.user));
+            localStorage.setItem('user', response.data.user.user_name);
+            localStorage.setItem('email', response.data.user.email)
 
             navigate('/feed');
           } catch (error) {

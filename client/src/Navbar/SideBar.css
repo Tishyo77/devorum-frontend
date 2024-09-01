@@ -2,7 +2,7 @@
   position: fixed; 
   top: 70px; 
   left: 0;
-  background-color: #ffffff;
+  background-color: #F4F7BE;
   color: rgb(0, 0, 0);
   display: flex;
   flex-direction: column;
@@ -10,7 +10,10 @@
   height: calc(100% - 60px); 
   width: 250px; 
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+  border-right: 1px solid rgb(150, 150, 150);
+  font-family: 'Montserrat', sans-serif;
   z-index: 1000; 
+  overflow-y: auto;
 }
 
 .side-bar .side-bar-button {
@@ -18,6 +21,8 @@
   color: rgb(0, 0, 0);
   border: none;
   padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
   text-align: left;
   cursor: pointer;
   border-radius: 4px;
@@ -25,8 +30,14 @@
 }
 
 .side-bar .side-bar-button:hover {
-  background-color: #555;
-  color: #ffffff;
+  background-color: #b39e0033;
+}
+
+.feeds {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgb(150, 150, 150);
 }
 
 .forums {
