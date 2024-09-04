@@ -60,6 +60,17 @@ const TopBar = () => {
       } catch (error) {
         console.error('Error fetching users:', error);
       }
+    } else if (searchType === 'Forum' && query.startsWith('d/')) {
+      try {
+        const forumQuery = query.slice(2).toLowerCase();
+        const response = await api.get('/forum/'); // Fetch the list of forums
+        const filteredForums = response.data.filter(forum =>
+          forum.devorum.toLowerCase().includes(forumQuery)
+        );
+        setSuggestions(filteredForums);
+      } catch (error) {
+        console.error('Error fetching forums:', error);
+      }
     }
   };
 
@@ -114,16 +125,15 @@ const TopBar = () => {
           value={searchQuery} 
           onChange={handleSearchChange}
         />
-        {suggestions.length > 0 && (
+        {suggestions.length > 0 && searchType === 'Forum' && (
           <ul className="suggestions-list">
             {suggestions.map((suggestion, index) => (
               <li 
                 key={index} 
                 className="suggestion-item" 
-                onClick={() => handleSuggestionClick(suggestion.user_name)}
+                onClick={() => navigate(`/forums/${suggestion.id}`)}
               >
-                <img src={suggestion.profile_photo} alt={`${suggestion.user_name}'s avatar`} className="suggestion-avatar" />
-                <span>{suggestion.user_name}</span>
+                <span>{suggestion.title}</span>
               </li>
             ))}
           </ul>

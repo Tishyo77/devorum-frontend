@@ -18,23 +18,21 @@ const ProfilePage = () => {
   const [userCerts, setUserCerts] = useState([]);
 
   useEffect(() => {
-    // Retrieve stored user data from local storage
     const storedUser = localStorage.getItem('user');
     
-    // Determine if the stored data is a string or a JSON object
     let parsedUser = null;
 
     try {
       parsedUser = JSON.parse(storedUser);
     } catch (e) {
       console.log('Stored user data is a simple string, treating it as a username.');
-      parsedUser = storedUser; // Assume it's the username directly
+      parsedUser = storedUser; 
     }
 
     if (parsedUser && typeof parsedUser === 'string') {
-      setLocalUserName(parsedUser); // Set the local username if it's a string
+      setLocalUserName(parsedUser);
     } else if (parsedUser && parsedUser.user_name) {
-      setLocalUserName(parsedUser.user_name); // Set the local username from the parsed object
+      setLocalUserName(parsedUser.user_name);
     } else {
       console.log('No valid user data found in local storage.');
     }
@@ -72,7 +70,10 @@ const ProfilePage = () => {
 
   const handleConnect = () => {
     console.log('Connect button clicked!');
-    // Add your connection logic here
+  };
+
+  const handleEdit = () => {
+    console.log('Edit button clicked!');
   };
 
   return (
@@ -85,19 +86,23 @@ const ProfilePage = () => {
             <div className="profile-picture">
               <img src={userAvatar} alt="Profile" />
             </div>
-            <div className="profile-info">
-              <h2>{username}</h2>
-              <p>Role: {userRole}</p>
-              <p>Qualification: {userQual}</p>
-            </div>
-            <div className="profile-bio">
-              <p>{userBio}</p>
-            </div>
-            {username !== localUserName && (
-              <div className="connect-button-container">
-                <button onClick={handleConnect} className="connect-button">Connect</button>
+            <div className="profile-details">
+              <div className="profile-info">
+                <h2>{username}</h2>
+                <p>Role: {userRole}</p>
+                <p>Qualification: {userQual}</p>
               </div>
-            )}
+              <div className="profile-bio">
+                <p>{userBio}</p>
+              </div>
+            </div>
+            <div className="profile-actions">
+              {username === localUserName ? (
+                <button onClick={handleEdit} className="action-button edit-button">Edit</button>
+              ) : (
+                <button onClick={handleConnect} className="action-button connect-button">Connect</button>
+              )}
+            </div>
           </div>
           <div className="skills-container">
             <div className="skills">

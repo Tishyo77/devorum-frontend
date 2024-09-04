@@ -1,29 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './NewIdea.css';
-
-const forums = [
-  'Web Development',
-  'Game Development',
-  'AI & Machine Learning',
-  'Mobile Apps',
-  'Data Science',
-  // Add more forum names as needed
-];
+import api from '../api';
 
 const NewIdea = ({ onClose, onSubmit }) => {
   const [title, setTitle] = useState('');
   const [idea, setIdea] = useState('');
-  const [status, setStatus] = useState('Abandoned');
+  const [status, setStatus] = useState('Searching');
   const [forumName, setForumName] = useState('');
   const [forumSuggestions, setForumSuggestions] = useState([]);
+  const [forums, setForums] = useState([]);
+  const [userId, setUserId] = useState(null); // Store the user_id here
+
+  useEffect(() => {
+    const fetchForums = async () => {
+      try {
+        const response = await api.get('/forum/');
+        setForums(response.data); 
+      } catch (error) {
+        console.error('Error fetching forums:', error);
+      }
+    };
+
+    fetchForums();
+
+    const fetchUserId = async () => {
+      const userName = localStorage.getItem('user'); 
+      if (userName) {
+        try {
+          const response = await api.post('/user/user_name', { user_name: userName });
+          if (response.data.length > 0) {
+            setUserId(response.data[0].user_id); 
+          }
+        } catch (error) {
+          console.error('Error fetching user ID:', error);
+        }
+      }
+    };
+
+    fetchUserId();
+  }, []);
 
   const handleForumChange = (e) => {
     const query = e.target.value;
     setForumName(query);
-
+  
     if (query.length > 0) {
-      const suggestions = forums.filter(forum => 
-        forum.toLowerCase().includes(query.toLowerCase())
+      const suggestions = forums.filter(forum =>
+        forum.title.toLowerCase().includes(query.toLowerCase())
       );
       setForumSuggestions(suggestions);
     } else {
@@ -31,14 +54,52 @@ const NewIdea = ({ onClose, onSubmit }) => {
     }
   };
 
-  const handleShare = () => {
+  const handleForumSelect = (forum) => {
+    setForumName("d/" + forum.devorum); 
+    setForumSuggestions([]); 
+  };
+
+  const handleTitleChange = (e) => {
+    const words = e.target.value.trim().split(/\s+/);
+    if (words.length <= 20) {
+      setTitle(e.target.value);
+    }
+  };
+
+  const handleIdeaChange = (e) => {
+    const words = e.target.value.trim().split(/\s+/);
+    if (words.length <= 50) {
+      setIdea(e.target.value);
+    }
+  };
+
+  const handleShare = async () => {
+    const selectedForum = forums.find(forum => `d/${forum.devorum}` === forumName);
+
+    if (!selectedForum) {
+      alert('Please select a valid forum.');
+      return;
+    }
+
+    if (!userId) {
+      alert('User not found. Please ensure you are logged in.');
+      return;
+    }
+
     const newIdea = {
       title,
-      idea,
-      status,
-      forumName,
+      body: idea,
+      user_id: userId,
+      forum_id: selectedForum.forum_id,
     };
-    onSubmit(newIdea);
+
+    try {
+      const response = await api.post('/idea/', newIdea);
+      onSubmit(response.data); 
+    } catch (error) {
+      console.error('Error sharing idea:', error);
+      alert('There was an error sharing your idea.');
+    }
   };
 
   return (
@@ -46,30 +107,28 @@ const NewIdea = ({ onClose, onSubmit }) => {
       <div className="modal-content">
         <h2>Share a New Idea</h2>
         <label>
-          Title (20 words max):
+          Title (20 Words Max):
           <input 
             type="text" 
             value={title} 
-            onChange={(e) => setTitle(e.target.value)} 
-            maxLength={20} 
+            onChange={handleTitleChange} 
           />
         </label>
         <label>
-          Idea (50 words max):
+          Idea (50 Words Max):
           <textarea 
             value={idea} 
-            onChange={(e) => setIdea(e.target.value)} 
-            maxLength={50} 
+            onChange={handleIdeaChange} 
           />
         </label>
         <label>
           Status:
           <select value={status} onChange={(e) => setStatus(e.target.value)}>
-            <option value="Abandoned">Abandoned</option>
-            <option value="Completed">Completed</option>
-            <option value="On Hold">On Hold</option>
             <option value="Searching">Searching</option>
             <option value="Found">Found</option>
+            <option value="Completed">Completed</option>
+            <option value="On Hold">On Hold</option>
+            <option value="Abandoned">Abandoned</option>
           </select>
         </label>
         <label>
@@ -84,9 +143,10 @@ const NewIdea = ({ onClose, onSubmit }) => {
               {forumSuggestions.map((forum, index) => (
                 <li 
                   key={index} 
-                  onClick={() => setForumName(forum)}
+                  onClick={() => handleForumSelect(forum)}
+                  className="suggestion-item"
                 >
-                  {forum}
+                  d/{forum.devorum}
                 </li>
               ))}
             </ul>
