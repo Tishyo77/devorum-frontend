@@ -3,6 +3,7 @@
   flex-direction: column;
   height: 100%;
   background-color: #E5F77D;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .devorum-page .content {
@@ -125,4 +126,46 @@
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
+/* Interested Button */
+.interested-button {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  color: black;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.interested-button:hover {
+  background-color: #b39e0033;
+}
+
+.interested-button img {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+/* Additional style for clicked button */
+.interested-button.clicked {
+  background-color: #f0c674; /* Change this color to indicate clicked state */
+  color: white;
+}
+
+/* Additional style for the 'not-owner' button */
+.interested-button.not-owner {
+  background-color: transparent;
+}
+
+.interested-button.not-owner:hover {
+  background-color: #f0c674;
+}
+
+
+
 
