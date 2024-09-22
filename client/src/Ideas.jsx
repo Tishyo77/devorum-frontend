@@ -9,6 +9,16 @@ const Ideas = ({ ideas, setIdeas, currentUser, userId }) => {
   const [menuOpen, setMenuOpen] = useState(null); 
   const menuRef = useRef(null);
 
+  const handleDelete = async (postId) => {
+    try {
+      await api.delete(`/idea/id/${postId}`);
+      setIdeas(prevIdeas => prevIdeas.filter(idea => idea.idea_id !== postId)); 
+      console.log('Idea deleted successfully');
+    } catch (error) {
+      console.error('Error deleting idea:', error);
+    }
+  };
+
   const calculateTimeAgo = (created_at) => {
     const postDate = new Date(created_at);
     const now = new Date();
@@ -118,7 +128,9 @@ const Ideas = ({ ideas, setIdeas, currentUser, userId }) => {
                 {currentUser === post.user_name ? (
                   <>
                     <button className="menu-item">Edit</button>
-                    <button className="menu-item">Delete</button>
+                    <button className="menu-item" onClick={() => handleDelete(post.idea_id)}>
+                      Delete
+                    </button>
                   </>
                 ) : (
                   <button className="menu-item">Report</button>
