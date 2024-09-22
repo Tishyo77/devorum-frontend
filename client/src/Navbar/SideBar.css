@@ -45,3 +45,9 @@
   display: flex;
   flex-direction: column;
 }
+
+.icon {
+  width: 25px;  
+  height: 25px;
+  margin-right: 15px;  
+}
