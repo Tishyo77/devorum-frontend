@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Interested from './assets/Interested.png';
+import Options from './assets/Options.png';
 import api from './api';
 
 const Ideas = ({ ideas, setIdeas, currentUser, userId }) => {
   const [selectedLikes, setSelectedLikes] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(null); 
+  const menuRef = useRef(null);
 
   const calculateTimeAgo = (created_at) => {
     const postDate = new Date(created_at);
@@ -69,6 +72,24 @@ const Ideas = ({ ideas, setIdeas, currentUser, userId }) => {
     }
   };
 
+  // Toggle the options menu visibility for each post
+  const toggleMenu = (postId) => {
+    setMenuOpen(menuOpen === postId ? null : postId);
+  };
+
+  // Detect clicks outside the menu to close it
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(null);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, []);
+
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -87,8 +108,23 @@ const Ideas = ({ ideas, setIdeas, currentUser, userId }) => {
               <span className={`status ${post.status.toLowerCase().replace(/ /g, '-')}`}>{post.status}</span>
               <div className="post-meta">
                 <span>{calculateTimeAgo(post.created_at)}</span>
-              </div>
+              </div>  
             </div>
+            <button className="options-button" onClick={() => toggleMenu(post.idea_id)}>
+              <img src={Options} alt="Options" />
+            </button>
+            {menuOpen === post.idea_id && (
+              <div className="options-menu" ref={menuRef}>
+                {currentUser === post.user_name ? (
+                  <>
+                    <button className="menu-item">Edit</button>
+                    <button className="menu-item">Delete</button>
+                  </>
+                ) : (
+                  <button className="menu-item">Report</button>
+                )}
+              </div>
+            )}
           </div>
           <h3 className="post-title">{post.title}</h3>
           <p className="post-content">{post.body}</p>
