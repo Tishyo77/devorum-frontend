@@ -9,7 +9,7 @@ const NewIdea = ({ onClose, onSubmit }) => {
   const [forumName, setForumName] = useState('');
   const [forumSuggestions, setForumSuggestions] = useState([]);
   const [forums, setForums] = useState([]);
-  const [userId, setUserId] = useState(null); // Store the user_id here
+  const [userId, setUserId] = useState(null); 
 
   useEffect(() => {
     const fetchForums = async () => {
@@ -91,6 +91,7 @@ const NewIdea = ({ onClose, onSubmit }) => {
       body: idea,
       user_id: userId,
       forum_id: selectedForum.forum_id,
+      status: status,
     };
 
     try {
