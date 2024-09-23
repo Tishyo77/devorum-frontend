@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Interested from './assets/Interested.png';
-import Options from './assets/Options.png';
-import api from './api';
+import Interested from '../assets/Interested.png';
+import Options from '../assets/Options.png';
+import api from '../api';
+import './Ideas.css';
 
 const Ideas = ({ ideas, setIdeas, currentUser, userId }) => {
   const [selectedLikes, setSelectedLikes] = useState([]);

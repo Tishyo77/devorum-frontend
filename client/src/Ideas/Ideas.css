@@ -1,0 +1,211 @@
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .post-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .username {
+    font-weight: bold;
+  }
+  
+  .forum {
+    color: #555;
+  }
+  
+  .status {
+    padding: 3px 6px;
+    border-radius: 4px;
+    color: black;
+  }
+  
+  .status.searching {
+    background-color: #78ff97;
+  }
+  
+  .status.found {
+    background-color: #88f5ff;
+  }
+  
+  .status.completed {
+    background-color: #db9aff;
+  }
+  
+  .status.on-hold {
+    background-color: #ff8686;
+  }
+  
+  .status.abandoned {
+    background-color: #000000;
+    color: #000000;
+  }
+  
+  .post-meta {
+    font-size: 15px;
+    color: #303030;
+    margin-left: 10px;
+  }
+  
+  .post-title {
+    margin-top: 35px;
+    margin-bottom: 20px;
+    font-family: "Space Mono", monospace;
+  }
+  
+  .post-content {
+    font-size: 17px;
+    text-align: justify;
+    font-family: "Space Mono", monospace;
+  }
+  
+  .like-count {
+    font-weight: bold;
+    color: #555;
+    cursor: pointer;
+  }
+  
+  .ideas-list .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+  }
+  
+  .ideas-list .modal-content {
+    background: #edff85;
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px;
+    text-align: center;
+  }
+  
+  .ideas-list .modal-content ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .ideas-list .modal-content button {
+    background: #1E000E;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .ideas-list .modal-content button:hover {
+    background: #28001391;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  
+  /* Interested Button */
+  .interested-button {
+    display: flex;
+    align-items: center;
+    background-color: #f0c674;
+    color: black;
+    border: none;
+    padding: 8px 12px;
+    margin-top: 35px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .interested-button:hover {
+    background-color: #b39e0033;
+  }
+  
+  .interested-button img {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+  }
+  
+  /* Additional style for clicked button */
+  .interested-button.clicked {
+    background-color: #1E000E; /* Change this color to indicate clicked state */
+    color: white;
+  }
+  
+  /* Additional style for the 'not-owner' button */
+  .interested-button.not-owner {
+    background-color: #f0c674;
+  }
+  
+  .interested-button.not-owner:hover {
+    background-color: #1E000E;
+    color: #fff;
+  }
+  
+  .options-button {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 20px;
+    transition: background 0.3s ease;
+  }
+  
+  .options-button img {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .options-button:hover {
+    background-color: #b39e0033;
+  }
+  
+  .options-menu {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding-top: 0px;
+    background-color: white;
+    color: #000000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 10;
+  }
+  
+  .menu-item {
+    background: none;
+    color: #000000;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    margin: 0;
+  }
+  
+  .menu-item:hover {
+    background-color: #f2f2f2;
+  }
+  
