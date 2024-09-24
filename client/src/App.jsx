@@ -8,6 +8,7 @@ import Profile from './Profile/ProfilePage';
 import Feed from './Feed/FeedPage';
 import Devorum from './Devorum/DevorumPage';
 import Home from './Feed/HomePage';
+import InterestedIdeas from './Feed/InterestedIdeas';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="devorum/:devorum" element={<Devorum />} />
         <Route path="feed" element={<Feed />} />
         <Route path="home" element={<Home />} />
+        <Route path="interested-ideas" element={<InterestedIdeas />} />
       </Routes>
     </Router>
   );

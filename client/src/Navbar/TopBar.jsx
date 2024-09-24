@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import logo from '../assets/Logo.png';
-import newIdeaIcon from '../assets/NewIdea.png';  // Import the New Idea icon
+import newIdeaIcon from '../assets/NewIdea.png'; // Import the New Idea icon
 import './TopBar.css';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
@@ -13,6 +13,7 @@ const TopBar = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState('');
+  const [dropdownVisible, setDropdownVisible] = useState(false); // New state for dropdown visibility
 
   useEffect(() => {
     const fetchUserProfilePhoto = async () => {
@@ -33,19 +34,7 @@ const TopBar = () => {
   }, []);
 
   const handleProfileClick = () => {
-    const userData = localStorage.getItem('user');
-    let username;
-
-    try {
-      const user = JSON.parse(userData);
-      username = user.user_name;
-    } catch (error) {
-      username = userData;
-    }
-
-    if (username) {
-      navigate(`/profile/${username}`);
-    }
+    setDropdownVisible(!dropdownVisible); 
   };
 
   const handleSearchChange = async (e) => {
@@ -104,6 +93,32 @@ const TopBar = () => {
     setShowModal(false);
   };
 
+  const handleOptionClick = (option) => {
+    setDropdownVisible(false); 
+    if (option === 'Profile') {
+      const userData = localStorage.getItem('user');
+      let username;
+
+      try {
+        const user = JSON.parse(userData);
+        username = user.user_name;
+      } catch (error) {
+        username = userData;
+      }
+
+      if (username) {
+        navigate(`/profile/${username}`);
+      }
+    } else if (option === 'Connections') {
+      navigate('/connections'); 
+    } else if (option === 'Interested Ideas') {
+      navigate('/interested-ideas'); 
+    } else if (option === 'Log Out') {
+      localStorage.clear(); 
+      navigate('/'); 
+    }
+  };
+
   return (
     <div className="top-bar">
       <div className="logo">
@@ -147,6 +162,16 @@ const TopBar = () => {
         <div className="profile-button" onClick={handleProfileClick}>
           <img src={profilePhoto} alt="User Profile" className="profile-photo" />
         </div>
+        {dropdownVisible && (
+          <div className="profile-dropdown">
+            <ul>
+              <li onClick={() => handleOptionClick('Profile')}>Profile</li>
+              <li onClick={() => handleOptionClick('Connections')}>Connections</li>
+              <li onClick={() => handleOptionClick('Interested Ideas')}>Interested Ideas</li>
+              <li onClick={() => handleOptionClick('Log Out')}>Log Out</li>
+            </ul>
+          </div>
+        )}
       </div>
 
       {showModal && <NewIdea onClose={handleModalClose} onSubmit={handleIdeaSubmit} />}
