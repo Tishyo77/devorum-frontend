@@ -7,6 +7,7 @@ import Login from './Login/LoginPage';
 import Profile from './Profile/ProfilePage';
 import Feed from './Feed/FeedPage';
 import Devorum from './Devorum/DevorumPage';
+import Home from './Feed/HomePage';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="profile/:username" element={<Profile />} />
         <Route path="devorum/:devorum" element={<Devorum />} />
         <Route path="feed" element={<Feed />} />
+        <Route path="home" element={<Home />} />
       </Routes>
     </Router>
   );

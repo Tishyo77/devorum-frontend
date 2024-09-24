@@ -57,8 +57,12 @@ const SideBar = () => {
     }
   }, [forumIds]);
 
-  const handleHomeClick = () => {
+  const handleFeedClick = () => {
     navigate('/feed');
+  };
+
+  const handleHomeClick = () => {
+    navigate('/home');
   };
 
   const handleForumClick = (forumName) => {
@@ -73,7 +77,7 @@ const SideBar = () => {
           <img src={HomeIcon} alt="Home" className="icon" />
           Home
         </button>
-        <button onClick={handleHomeClick} className="side-bar-button">
+        <button onClick={handleFeedClick} className="side-bar-button">
           <img src={FeedIcon} alt="Your Feed" className="icon" />
           Your Feed
         </button>

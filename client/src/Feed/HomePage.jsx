@@ -5,7 +5,7 @@ import SideBar from '../Navbar/SideBar';
 import api from '../api';
 import Ideas from '../Ideas/Ideas';
 
-const FeedPage = () => {
+const HomePage = () => {
   const [ideas, setIdeas] = useState([]);
   const [userId, setUserId] = useState(null);
 
@@ -28,7 +28,7 @@ const FeedPage = () => {
   useEffect(() => {
     const fetchForumData = async () => {
       try {
-        const ideasResponse = await api.get(`/idea/user/${userId}`);
+        const ideasResponse = await api.get(`/idea/`);
         const ideasWithUserDetails = await Promise.all(
           ideasResponse.data.map(async (idea) => {
             const userResponse = await api.get(`/user/${idea.user_id}`);
@@ -70,4 +70,4 @@ const FeedPage = () => {
   );
 };
 
-export default FeedPage;
+export default HomePage;
