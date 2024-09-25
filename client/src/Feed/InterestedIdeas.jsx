@@ -11,11 +11,12 @@ const InterestedIdeas = () => {
 
   const currentUser = localStorage.getItem("user");
 
+  // Fetch the user_id by the current username
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const userResponse = await api.post('/user/user_name', { user_name: currentUser });
-        const userId = userResponse.data[0]?.user_id;
+        const userId = userResponse.data[0]?.user_id; // Assuming user data has user_id
         setUserId(userId);
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -25,31 +26,40 @@ const InterestedIdeas = () => {
     fetchUserData();
   }, [currentUser]);
 
+  // Fetch interested ideas by the user's user_id
   useEffect(() => {
-    const fetchForumData = async () => {
+    const fetchInterestedIdeas = async () => {
       try {
-        const ideasResponse = await api.get(`/idea/`);
-        const ideasWithUserDetails = await Promise.all(
-          ideasResponse.data.map(async (idea) => {
+        if (!userId) return; // Wait until userId is set
+
+        // Fetch the user's interested ideas
+        const interestResponse = await api.get(`/interest/user_id/${userId}`);
+        const interestedIdeaIds = interestResponse.data.map(row => row.ideas_id); // Array of interested idea_ids
+
+        // Fetch details of all interested ideas by their idea_id
+        const ideasWithDetails = await Promise.all(
+          interestedIdeaIds.map(async (idea_id) => {
+            const ideaResponse = await api.get(`/idea/id/${idea_id}`);
+            const idea = ideaResponse.data[0]; // Assuming you get an array with one object
+
+            // Fetch the user who posted the idea
             const userResponse = await api.get(`/user/${idea.user_id}`);
             const user_name = userResponse.data[0].user_name;
             const profile_photo = userResponse.data[0].profile_photo;
 
-            const interestResponse = await api.get(`/interest/user_id/${userId}`);
-            const isInterested = interestResponse.data.some(row => row.ideas_id === idea.idea_id);
-
-            return { ...idea, user_name, profile_photo, isInterested };
+            // Return the idea with additional user info
+            return { ...idea, user_name, profile_photo, isInterested: true };
           })
         );
-        setIdeas(ideasWithUserDetails);
+
+        // Update the state with the interested ideas
+        setIdeas(ideasWithDetails);
       } catch (error) {
-        console.error("Error fetching forum data:", error);
+        console.error('Error fetching interested ideas:', error);
       }
     };
 
-    if (userId) {
-      fetchForumData();
-    }
+    fetchInterestedIdeas();
   }, [userId]);
 
   return (
