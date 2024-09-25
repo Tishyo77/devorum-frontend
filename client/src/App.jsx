@@ -9,7 +9,7 @@ import Feed from './Feed/FeedPage';
 import Devorum from './Devorum/DevorumPage';
 import Home from './Feed/HomePage';
 import InterestedIdeas from './Feed/InterestedIdeas';
-import IdeaPage from './Ideas/IdeaPage';
+import IdeaPage from './Feed/IdeaPage';
 
 // Higher-order component to protect routes
 const ProtectedRoute = ({ element: Component }) => {

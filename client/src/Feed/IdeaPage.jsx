@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'; // Import useParams
-import '../Feed/FeedPage.css';
+import './FeedPage.css';
 import TopBar from '../Navbar/TopBar';
 import SideBar from '../Navbar/SideBar';
 import api from '../api';

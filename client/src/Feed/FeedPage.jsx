@@ -8,7 +8,6 @@ import Ideas from '../Ideas/Ideas';
 const FeedPage = () => {
   const [ideas, setIdeas] = useState([]);
   const [userId, setUserId] = useState(null);
-
   const currentUser = localStorage.getItem("user");
 
   useEffect(() => {
@@ -26,11 +25,21 @@ const FeedPage = () => {
   }, [currentUser]);
 
   useEffect(() => {
-    const fetchForumData = async () => {
+    const fetchIdeasFromJoinedForums = async () => {
       try {
-        const ideasResponse = await api.get(`/idea/user/${userId}`);
+        const forumsResponse = await api.get(`/forum-joined/user/${userId}`);
+        const forumIds = forumsResponse.data.map(forum => forum.forums_id);
+        console.log(forumIds);
+        const ideasResponses = await Promise.all(
+          forumIds.map(forumId =>
+            api.get(`/idea/forum/${forumId}`)
+          )
+        );
+
+        const allIdeas = ideasResponses.flatMap(response => response.data);
+
         const ideasWithUserDetails = await Promise.all(
-          ideasResponse.data.map(async (idea) => {
+          allIdeas.map(async (idea) => {
             const userResponse = await api.get(`/user/${idea.user_id}`);
             const user_name = userResponse.data[0].user_name;
             const profile_photo = userResponse.data[0].profile_photo;
@@ -41,14 +50,17 @@ const FeedPage = () => {
             return { ...idea, user_name, profile_photo, isInterested };
           })
         );
-        setIdeas(ideasWithUserDetails);
+
+        const sortedIdeas = ideasWithUserDetails.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+        setIdeas(sortedIdeas);
       } catch (error) {
-        console.error("Error fetching forum data:", error);
+        console.error("Error fetching ideas from joined forums:", error);
       }
     };
 
     if (userId) {
-      fetchForumData();
+      fetchIdeasFromJoinedForums();
     }
   }, [userId]);
 
