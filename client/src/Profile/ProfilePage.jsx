@@ -25,7 +25,6 @@ const ProfilePage = () => {
     try {
       parsedUser = JSON.parse(storedUser);
     } catch (e) {
-      console.log('Stored user data is a simple string, treating it as a username.');
       parsedUser = storedUser; 
     }
 

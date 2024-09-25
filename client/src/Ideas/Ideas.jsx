@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Interested from '../assets/Interested.png';
 import Options from '../assets/Options.png';
+import ShareIcon from '../assets/Share.png';
 import api from '../api';
 import './Ideas.css';
 
@@ -9,6 +10,7 @@ const Ideas = ({ ideas, setIdeas, currentUser, userId }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(null); 
   const [interestedUsers, setInterestedUsers] = useState([]);
+  const [message, setMessage] = useState('');
   const menuRef = useRef(null);
 
   const handleDelete = async (postId) => {
@@ -106,6 +108,14 @@ const Ideas = ({ ideas, setIdeas, currentUser, userId }) => {
     }
   };
 
+  const handleShareClick = (ideaId) => {
+    const link = `http://localhost:5173/ideas/${ideaId}`;
+    navigator.clipboard.writeText(link).then(() => {
+      setMessage('Idea link copied to clipboard');
+      setTimeout(() => setMessage(''), 3000); 
+    });
+  };
+
   // Toggle the options menu visibility for each post
   const toggleMenu = (postId) => {
     setMenuOpen(menuOpen === postId ? null : postId);
@@ -166,13 +176,21 @@ const Ideas = ({ ideas, setIdeas, currentUser, userId }) => {
           </div>
           <h3 className="post-title">{post.title}</h3>
           <p className="post-content">{post.body}</p>
-          <button
-            className={`interested-button ${post.isInterested ? 'clicked' : 'not-owner'}`}
-            onClick={() => handleLikesClick(post.likes || [], post.idea_id, post.user_name)}
-          >
-            <img src={Interested} alt="Interested Icon" className="interested-icon" />
-            Interested
-          </button>
+          <div className="action-buttons">
+            <button
+              className={`interested-button ${post.isInterested ? 'clicked' : 'not-owner'}`}
+              onClick={() => handleLikesClick(post.likes || [], post.idea_id, post.user_name)}
+            >
+              <img src={Interested} alt="Interested Icon" className="interested-icon" />
+              Interested
+            </button>
+            <button
+              className="share-button"
+              onClick={() => handleShareClick(post.idea_id)}
+            >
+              <img src={ShareIcon} alt="Share Icon" className="share-icon" />
+            </button>
+          </div>
         </div>
       ))}
 
@@ -199,6 +217,8 @@ const Ideas = ({ ideas, setIdeas, currentUser, userId }) => {
           </div>
         </div>
       )}
+
+      {message && <div className="copy-message">{message}</div>}
     </div>
   );
 };
