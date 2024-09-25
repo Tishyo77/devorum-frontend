@@ -39,7 +39,7 @@ const IdeaPage = () => {
         const profile_photo = userResponse.data[0].profile_photo;
 
         const interestResponse = await api.get(`/interest/user_id/${userId}`);
-        const isInterested = interestResponse.data.some(row => row.ideas_id === idea_id);
+        const isInterested = interestResponse.data.some(row => row.ideas_id == idea_id);
 
         setIdea({ ...ideaData, user_name, profile_photo, isInterested });
       } catch (error) {

@@ -52,6 +52,7 @@ const DevorumPage = () => {
 
             const interestResponse = await api.get(`/interest/user_id/${userId}`);
             const isInterested = interestResponse.data.some(row => row.ideas_id === idea.idea_id);
+            console.log(isInterested);
 
             return { ...idea, user_name, profile_photo, isInterested };
           })
