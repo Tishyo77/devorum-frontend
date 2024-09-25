@@ -1,4 +1,3 @@
-// Avatars.js
 import avatar1 from './Avatars/Avatar1.png';
 import avatar2 from './Avatars/Avatar2.png';
 import avatar3 from './Avatars/Avatar3.png';
@@ -17,7 +16,8 @@ import avatar15 from './Avatars/Avatar15.png';
 import avatar16 from './Avatars/Avatar16.png';
 import avatar17 from './Avatars/Avatar17.png';
 import avatar18 from './Avatars/Avatar18.png';
-// Import all other avatar images
+import avatar19 from './Avatars/Avatar19.png';
+import avatar20 from './Avatars/Avatar20.png';
 
 const avatarPaths = [
   avatar1,
@@ -38,7 +38,8 @@ const avatarPaths = [
   avatar16,
   avatar17,
   avatar18,
-  // Add other avatar paths here
+  avatar19,
+  avatar20,
 ];
 
 export default avatarPaths;

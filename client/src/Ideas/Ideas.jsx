@@ -8,6 +8,7 @@ const Ideas = ({ ideas, setIdeas, currentUser, userId }) => {
   const [selectedLikes, setSelectedLikes] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(null); 
+  const [interestedUsers, setInterestedUsers] = useState([]);
   const menuRef = useRef(null);
 
   const handleDelete = async (postId) => {
@@ -41,17 +42,39 @@ const Ideas = ({ ideas, setIdeas, currentUser, userId }) => {
     }
   }
 
+  // Fetch interested users for an idea
+  const fetchInterestedUsers = async (postId) => {
+    try {
+      // Fetch the list of user IDs interested in the idea
+      const interestResponse = await api.get(`/interest/idea_id/${postId}`);
+      const interestedUserIds = interestResponse.data.map((row) => row.user_id);
+      
+      // Fetch details for each interested user using their user_id
+      const userDetails = await Promise.all(
+        interestedUserIds.map(async (user_id) => {
+          const userResponse = await api.get(`/user/${user_id}`);
+          return userResponse.data[0]; // Assuming user data is the first object in the array
+        })
+      );
+
+      setInterestedUsers(userDetails); // Set the fetched users
+      setModalOpen(true); // Open the modal to show the list
+    } catch (error) {
+      console.error("Error fetching interested users:", error);
+    }
+  };
+
   const handleLikesClick = async (likes, postId, owner) => {
     if (currentUser === owner) {
       // If current user is the owner, show the modal
       setSelectedLikes(likes);
       setModalOpen(true);
+      await fetchInterestedUsers(postId);
     } else {
       try {
         // Check if the current user has already expressed interest in this idea
         const interestResponse = await api.get(`/interest/user_id/${userId}`);
         const isAlreadyInterested = interestResponse.data.some(row => row.ideas_id === postId);
-        console.log(isAlreadyInterested);
 
         if (isAlreadyInterested) {
           // Remove interest from the backend
@@ -114,7 +137,9 @@ const Ideas = ({ ideas, setIdeas, currentUser, userId }) => {
           <div className="devorum-header">
             <img src={post.profile_photo} alt="Avatar" className="avatar" />
             <div className="post-info">
-              <span className="username">{post.user_name}</span>
+              <a href={`/profile/${post.user_name}`} className="username">
+                <span className="username">{post.user_name}</span>
+              </a>
               <span className="forum">{post.forum_name}</span>
               <span className={`status ${post.status.toLowerCase().replace(/ /g, '-')}`}>{post.status}</span>
               <div className="post-meta">
@@ -151,19 +176,24 @@ const Ideas = ({ ideas, setIdeas, currentUser, userId }) => {
         </div>
       ))}
 
-      {/* Modal for showing likes */}
+      {/* Modal for showing interested users */}
       {modalOpen && (
         <div className="modal">
           <div className="modal-content">
             <h2>Interested Users</h2>
-            {selectedLikes.length > 0 ? (
+            {interestedUsers.length > 0 ? (
               <ul>
-                {selectedLikes.map((like, index) => (
-                  <li key={index}>{like}</li>
+                {interestedUsers.map((user, index) => (
+                  <li key={index} className="interested-user">
+                    <img src={user.profile_photo} alt={user.user_name} className="user-avatar" />
+                    <a href={`/profile/${user.user_name}`} className="user-name">
+                      {user.user_name}
+                    </a>
+                  </li>
                 ))}
               </ul>
             ) : (
-              <p>No likes yet.</p>
+              <p>No users have shown interest yet.</p>
             )}
             <button onClick={closeModal}>Close</button>
           </div>
