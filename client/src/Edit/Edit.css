@@ -1,0 +1,91 @@
+.edit-page {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 100vh;
+    background-color: #E5F77D;
+}
+
+.edit-page .content {
+    display: flex;
+    flex: 1;
+    margin-top: 70px;
+    margin-left: 250px;
+}
+
+.edit-page .edit-container {
+    flex: 1;
+    padding: 40px;
+    margin-right: 25%;
+    overflow-y: auto;
+}
+
+.edit-page .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.edit-page .post-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+  
+.edit-page .username {
+    font-weight: bold;
+}
+
+.edit-page .status {
+    padding: 3px 6px;
+    border-radius: 4px;
+    color: black;
+}
+
+.edit-page .post-title {
+    font-size: 30px;
+    width: 100%;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    padding: 0px;
+    border-radius: 5px;
+    font-family: "Space Mono", monospace;
+    border: none;
+    background-color: #F4F7BE;
+}
+
+.edit-page .post-content {
+    font-size: 17px;
+    text-align: justify;
+    font-family: "Space Mono", monospace;
+    width: 100%;
+    border: none;
+    background-color: #F4F7BE;
+}
+
+.edit-page .save-button {
+    display: flex;
+    align-items: center;
+    background-color: #f0c674;
+    color: black;
+    border: none;
+    padding: 8px 12px;
+    margin-top: 35px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.25rem;
+    font-family: 'Montserrat', sans-serif;
+    transition: background-color 0.3s ease;
+}
+
+.edit-page .save-button:hover {
+    background-color: #b39e0033;
+}
+
+.edit-page .save-button img {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+}

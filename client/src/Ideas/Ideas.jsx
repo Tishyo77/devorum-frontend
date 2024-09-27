@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Interested from '../assets/Interested.png';
 import Options from '../assets/Options.png';
 import ShareIcon from '../assets/Share.png';
 import api from '../api';
 import './Ideas.css';
-
+ 
 const Ideas = ({ ideas, setIdeas, currentUser, userId }) => {
   const [selectedLikes, setSelectedLikes] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -12,6 +13,11 @@ const Ideas = ({ ideas, setIdeas, currentUser, userId }) => {
   const [interestedUsers, setInterestedUsers] = useState([]);
   const [message, setMessage] = useState('');
   const menuRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handleEdit = (ideaId, userId) => {
+    navigate(`/edit-idea/${ideaId}`, { state: { ideaId, userId } });
+  };
 
   const handleDelete = async (postId) => {
     try {
@@ -163,7 +169,7 @@ const Ideas = ({ ideas, setIdeas, currentUser, userId }) => {
               <div className="options-menu" ref={menuRef}>
                 {currentUser === post.user_name ? (
                   <>
-                    <button className="menu-item">Edit</button>
+                    <button className="menu-item" onClick={() => handleEdit(post.idea_id, userId)}>Edit</button>
                     <button className="menu-item" onClick={() => handleDelete(post.idea_id)}>
                       Delete
                     </button>

@@ -34,63 +34,6 @@
   margin-bottom: 25px;
 }
 
-.avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.post-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.username {
-  font-weight: bold;
-}
-
-.forum {
-  color: #555;
-}
-
-.status {
-  padding: 3px 6px;
-  border-radius: 4px;
-  color: white;
-}
-
-.status.searching {
-  background-color: #007bff;
-}
-
-.status.found {
-  background-color: #28a745;
-}
-
-.status.looking-for-more {
-  background-color: #ffc107;
-}
-
-.post-meta {
-  font-size: 12px;
-  color: #888;
-}
-
-.post-content {
-  font-size: 17px;
-  text-align: justify;
-  font-family: "Space Mono", monospace;
-}
-
-.like-count {
-  font-weight: bold;
-  color: #555;
-  cursor: pointer;
-}
-
 .modal {
   position: fixed;
   top: 0;

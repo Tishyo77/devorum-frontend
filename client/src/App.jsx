@@ -10,6 +10,7 @@ import Devorum from './Devorum/DevorumPage';
 import Home from './Feed/HomePage';
 import InterestedIdeas from './Feed/InterestedIdeas';
 import IdeaPage from './Feed/IdeaPage';
+import EditIdea from './Edit/EditIdea';
 
 // Higher-order component to protect routes
 const ProtectedRoute = ({ element: Component }) => {
@@ -33,6 +34,7 @@ const App = () => {
         <Route path="home" element={<ProtectedRoute element={<Home />} />} />
         <Route path="interested-ideas" element={<ProtectedRoute element={<InterestedIdeas />} />} />
         <Route path="ideas/:idea_id" element={<ProtectedRoute element={<IdeaPage />} />} />
+        <Route path="edit-idea/:idea_id" element={<ProtectedRoute element={<EditIdea />} />} />
       </Routes>
     </Router>
   );
