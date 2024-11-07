@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import logo from '../assets/Logo.png';
 import newIdeaIcon from '../assets/NewIdea.png'; // Import the New Idea icon
+import searchIcon from '../assets/Search.png';  // Import the Search icon
 import './TopBar.css';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
@@ -10,10 +11,9 @@ const TopBar = () => {
   const navigate = useNavigate();
   const [searchType, setSearchType] = useState('Idea');
   const [searchQuery, setSearchQuery] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState('');
-  const [dropdownVisible, setDropdownVisible] = useState(false); // New state for dropdown visibility
+  const [dropdownVisible, setDropdownVisible] = useState(false); // Dropdown visibility
 
   useEffect(() => {
     const fetchUserProfilePhoto = async () => {
@@ -37,29 +37,24 @@ const TopBar = () => {
     setDropdownVisible(!dropdownVisible); 
   };
 
-  const handleSearchChange = async (e) => {
-    const query = e.target.value;
-    setSearchQuery(query);
+  // Function to handle the search when Enter key or Search icon is clicked
+  const handleSearch = () => {
+    if (!searchQuery) return;
 
-    if (searchType === 'User' && query.startsWith('@')) {
-      try {
-        const username = query.slice(1);
-        const response = await api.post('/user/user_name', { user_name: username });
-        setSuggestions(response.data);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-    } else if (searchType === 'Forum' && query.startsWith('d/')) {
-      try {
-        const forumQuery = query.slice(2).toLowerCase();
-        const response = await api.get('/forum/'); // Fetch the list of forums
-        const filteredForums = response.data.filter(forum =>
-          forum.devorum.toLowerCase().includes(forumQuery)
-        );
-        setSuggestions(filteredForums);
-      } catch (error) {
-        console.error('Error fetching forums:', error);
-      }
+    if (searchType === 'Idea') {
+      navigate(`/idea/search?query=${searchQuery}`);
+    } else if (searchType === 'User' && searchQuery.startsWith('@')) {
+      const username = searchQuery.slice(1); 
+      navigate(`/user/search?query=${username}`);
+    } else if (searchType === 'Forum' && searchQuery.startsWith('d/')) {
+      const forumQuery = searchQuery.slice(2).toLowerCase(); 
+      navigate(`/forums/${forumQuery}`);
+    }
+  };
+
+  const handleSearchKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
     }
   };
 
@@ -68,16 +63,12 @@ const TopBar = () => {
     setSearchType(type);
 
     if (type === 'User') {
-      setSearchQuery('@');
+      setSearchQuery('@'); // Prefill with '@' for user search
     } else if (type === 'Forum') {
-      setSearchQuery('d/');
+      setSearchQuery('d/'); // Prefill with 'd/' for forum search
     } else {
-      setSearchQuery('');
+      setSearchQuery(''); // Clear for ideas
     }
-  };
-
-  const handleSuggestionClick = (username) => {
-    navigate(`/profile/${username}`);
   };
 
   const handleNewIdeaClick = () => {
@@ -94,7 +85,7 @@ const TopBar = () => {
   };
 
   const handleOptionClick = (option) => {
-    setDropdownVisible(false); 
+    setDropdownVisible(false);
     if (option === 'Profile') {
       const userData = localStorage.getItem('user');
       let username;
@@ -114,7 +105,7 @@ const TopBar = () => {
     } else if (option === 'Interested Ideas') {
       navigate('/interested-ideas'); 
     } else if (option === 'Log Out') {
-      localStorage.clear(); 
+      localStorage.clear();
       navigate('/'); 
     }
   };
@@ -134,29 +125,25 @@ const TopBar = () => {
           <option value="Forum">Forum</option>
           <option value="User">User</option>
         </select>
-        <input 
-          type="text" 
-          placeholder="Search..." 
-          value={searchQuery} 
-          onChange={handleSearchChange}
-        />
-        {suggestions.length > 0 && searchType === 'Forum' && (
-          <ul className="suggestions-list">
-            {suggestions.map((suggestion, index) => (
-              <li 
-                key={index} 
-                className="suggestion-item" 
-                onClick={() => navigate(`/forums/${suggestion.id}`)}
-              >
-                <span>{suggestion.title}</span>
-              </li>
-            ))}
-          </ul>
-        )}
+        <div className="search-input-container">
+          <input 
+            type="text" 
+            placeholder="Search..." 
+            value={searchQuery} 
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={handleSearchKeyPress}  // Trigger search on Enter key press
+          />
+          <img 
+            src={searchIcon} 
+            alt="Search Icon" 
+            className="search-icon" 
+            onClick={handleSearch}  // Trigger search on Search icon click
+          />
+        </div>
       </div>
       <div className="actions">
         <button className="new-idea-button" onClick={handleNewIdeaClick}>
-          <img src={newIdeaIcon} alt="New Idea" className="new-idea-icon" /> 
+          <img src={newIdeaIcon} alt="New Idea" className="new-idea-icon" />
           New Idea
         </button>
         <div className="profile-button" onClick={handleProfileClick}>

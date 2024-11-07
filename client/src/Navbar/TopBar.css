@@ -154,4 +154,26 @@
   background-color: #f0f0f0;
 }
 
+.search-input-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.search-input-container input {
+  width: 100%;
+  padding-right: 40px; 
+}
+
+.search-icon {
+  position: absolute;
+  right: 10px; 
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px; 
+  height: 20px;
+  cursor: pointer;
+}
+
+
 
