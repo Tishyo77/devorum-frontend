@@ -16,18 +16,24 @@ const ProfilePage = () => {
   const [userBio, setUserBio] = useState(null);
   const [userSkills, setUserSkills] = useState([]);
   const [userCerts, setUserCerts] = useState([]);
+  const [connectionStatus, setConnectionStatus] = useState(null);
+  const [connectionId, setConnectionId] = useState(null);
+  const user = localStorage.getItem('user');
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     
-    let parsedUser = null;
+    let parsedUser;
 
     try {
+      // Try parsing storedUser as JSON
       parsedUser = JSON.parse(storedUser);
     } catch (e) {
-      parsedUser = storedUser; 
+      // If parsing fails, assign storedUser directly
+      parsedUser = storedUser;
     }
 
+    // Check if parsedUser is a string or an object with user_name
     if (parsedUser && typeof parsedUser === 'string') {
       setLocalUserName(parsedUser);
     } else if (parsedUser && parsedUser.user_name) {
@@ -38,6 +44,7 @@ const ProfilePage = () => {
 
     if (username) {
       fetchUserData(username);
+      checkConnectionStatus(username);
     } else {
       console.log('No username found in the URL.');
     }
@@ -67,8 +74,99 @@ const ProfilePage = () => {
     }
   };
 
-  const handleConnect = () => {
-    console.log('Connect button clicked!');
+  const checkConnectionStatus = async (profileUsername) => {
+    try {
+      const senderResponse = await api.post('/user/user_name', { user_name: user });
+      const sender_id = senderResponse.data[0].user_id;
+      // Fetch profile user ID
+      const receiverResponse = await api.post('/user/user_name', { user_name: profileUsername });
+      const receiver_id = receiverResponse.data[0].user_id;
+
+      const response = await api.get('/connection/');
+      const connections = response.data;
+
+      const existingConnection = connections.find(
+        (conn) =>
+          (conn.sender_id === sender_id && conn.receiver_id === receiver_id) ||
+          (conn.sender_id === receiver_id && conn.receiver_id === sender_id)
+      );
+
+      if (existingConnection) {
+        setConnectionId(existingConnection.connection_id);
+
+        if (existingConnection.sender_id === sender_id && !existingConnection.accepted) {
+          setConnectionStatus('Request Sent');
+        } else if (existingConnection.sender_id === receiver_id && !existingConnection.accepted)
+        {
+          setConnectionStatus('Pending');
+        } else if (existingConnection.accepted) {
+          setConnectionStatus('Connected');
+        }
+      } else {
+        setConnectionStatus('Connect');
+      }
+    } catch (error) {
+      console.error('Error checking connection status:', error);
+    }
+  };
+
+  const handleConnect = async () => {
+    try {
+      const senderResponse = await api.post('/user/user_name', { user_name: localUserName });
+      const sender_id = senderResponse.data[0].user_id;
+
+      const receiverResponse = await api.post('/user/user_name', { user_name: username });
+      const receiver_id = receiverResponse.data[0].user_id;
+
+      const response = await api.post('/connection', {
+        sender_id,
+        receiver_id
+      });
+
+      if (response.status === 201) {
+        alert('Connection request sent successfully');
+        setConnectionStatus('Request Sent');
+        const response = await api.get('/connection/');
+        const connections = response.data;
+
+        const existingConnection = connections.find(
+          (conn) =>
+            (conn.sender_id === sender_id && conn.receiver_id === receiver_id) ||
+            (conn.sender_id === receiver_id && conn.receiver_id === sender_id)
+        );
+
+        setConnectionId(existingConnection.connection_id);
+      } else {
+        alert(response.data || 'Error sending connection request');
+      }
+    } catch (error) {
+      console.error('Error sending connection request:', error);
+      alert('An error occurred while sending the connection request.');
+    }
+  };
+
+  const handleDeleteConnection = async () => {
+    try {
+      console.log(connectionId);
+      await api.delete(`/connection/${connectionId}`);
+      alert('Connection deleted successfully');
+      setConnectionStatus('Connect');
+      setConnectionId(null);
+    } catch (error) {
+      console.error('Error deleting connection:', error);
+      alert('An error occurred while deleting the connection.');
+    }
+  };
+
+  const handleAcceptConnection = async () => {
+    try {
+      await api.put(`/connection/accept/connection/${connectionId}`);
+      alert('Connection accepted');
+      setConnectionStatus('Connected');
+    } catch (error) {
+      console.error('Error accepting connection:', error);
+      alert('An error occurred while accepting the connection request.');
+    }
   };
 
   const handleEdit = () => {
@@ -97,9 +195,20 @@ const ProfilePage = () => {
             </div>
             <div className="profile-actions">
               {username === localUserName ? (
-                <button onClick={handleEdit} className="action-button edit-button">Edit</button>
+                <button className="action-button edit-button">Edit</button>
               ) : (
-                <button onClick={handleConnect} className="action-button connect-button">Connect</button>
+                <button
+                  onClick={
+                    connectionStatus === 'Connect'
+                      ? handleConnect
+                      : connectionStatus === 'Pending'
+                      ? handleAcceptConnection
+                      : handleDeleteConnection
+                  }
+                  className="action-button connect-button"
+                >
+                  {connectionStatus}
+                </button>
               )}
             </div>
           </div>
