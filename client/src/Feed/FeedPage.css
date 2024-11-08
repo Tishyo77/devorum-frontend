@@ -61,3 +61,18 @@
   cursor: pointer;
   font-size: 20px;
 }
+
+.feed-page .page-details {
+  background-color: #1E000E;
+  color: #fff;
+  padding: 30px;
+  margin-bottom: 40px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+}
+
+.page-details h2 {
+  font-family: 'Montserrat', sans-serif;
+}

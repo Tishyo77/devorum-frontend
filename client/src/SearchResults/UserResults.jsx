@@ -1,7 +1,6 @@
 // UserResults.jsx
 import React, { useState, useEffect } from 'react';
 import '../Feed/FeedPage.css'; 
-import '../UserList/UserList.css';
 import TopBar from '../Navbar/TopBar';
 import SideBar from '../Navbar/SideBar';
 import api from '../api';

@@ -101,7 +101,7 @@ const TopBar = () => {
         navigate(`/profile/${username}`);
       }
     } else if (option === 'Connections') {
-      navigate('/connections'); 
+      navigate('/connected'); 
     } else if (option === 'Interested Ideas') {
       navigate('/interested-ideas'); 
     } else if (option === 'Log Out') {

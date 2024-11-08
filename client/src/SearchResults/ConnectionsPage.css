@@ -1,0 +1,68 @@
+.connections-page {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 100vh;
+    background-color: #E5F77D;
+  }
+  
+  .connections-page .content {
+    display: flex;
+    flex: 1;
+    margin-top: 70px;
+    margin-left: 250px;
+  }
+  
+  .connections-container {
+    flex: 1;
+    padding: 40px;
+    margin-right: 25%;
+    overflow-y: auto;
+  }
+  
+  .connections-page .page-details {
+    background-color: #1E000E;
+    color: #fff;
+    padding: 30px;
+    margin-bottom: 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .connections-page h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    margin-right: 20px;
+  }
+  
+  .connections-page .connection-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center; 
+  }
+  
+  .connection-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f4f7be; 
+    color: black;
+    font-family: 'Montserrat', sans-serif;
+    transition: background-color 0.3s ease;
+    margin: 0;
+  }
+  
+  .connection-buttons button.active {
+    background-color: #f0c674; 
+    color: #1E000E; 
+  }
+  
+  .connection-buttons button:hover {
+    background-color: #f0c674;
+  }
+  
+  
