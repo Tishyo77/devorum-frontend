@@ -1,11 +1,11 @@
-.user-results {
+.user-list {
     display: flex;
     flex-direction: column;
     gap: 15px;
     font-family: 'Montserrat', sans-serif;
   }
   
-  .user-results .user-container {
+  .user-list .user-container {
     display: flex;
     align-items: center; /* Vertically centers the content */
     padding: 20px;
@@ -15,13 +15,13 @@
     justify-content: space-between;
   }
 
-  .user-results .user-avatar-details {
+  .user-list .user-avatar-details {
     display: flex;
     flex-direction: row;
     align-items: center;
   }
   
-  .user-results .user-avatar {
+  .user-list .user-avatar {
     width: 75px;
     height: 75px;
     border-radius: 50%;
@@ -29,7 +29,7 @@
     margin-left: 20px;
   }
   
-  .user-results .user-info {
+  .user-list .user-info {
     display: flex;
     align-items: center; 
     flex-grow: 1; 
@@ -37,23 +37,23 @@
     margin-top: 15px;
   }
   
-  .user-results .user-details {
+  .user-list .user-details {
     display: flex;
     flex-direction: column; 
   }
   
-  .user-results .user-name {
+  .user-list .user-name {
     font-size: 30px;
     font-weight: 600;
     margin-bottom: 10px; 
   }
   
-  .user-results .user-role {
+  .user-list .user-role {
     font-size: 25px;
     color: #777;
   }
   
-  .user-results .connect-button {
+  .user-list .connect-button {
     background-color: #1E000E;
     color: #fff;
     padding: 10px 20px; 
@@ -66,7 +66,7 @@
     font-size: 20px;
   }
   
-  .user-results .connect-button:hover {
+  .user-list .connect-button:hover {
     background-color: #1e000e94;
   }
   
