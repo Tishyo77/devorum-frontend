@@ -14,6 +14,12 @@
     background-color: #F4F7BE;
     justify-content: space-between;
   }
+
+  .user-results .user-avatar-details {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
   
   .user-results .user-avatar {
     width: 75px;
