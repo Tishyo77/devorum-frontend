@@ -1,10 +1,11 @@
 body {
-  background-color: #f4f7be;
+  background-color: #1E000E;
 }
 
 .landing {
   font-family: Arial, sans-serif;
   margin: 0 auto;
+  color: #f4f7be;
 }
 
 .landing .navbar {
@@ -49,6 +50,7 @@ body {
   margin-bottom: 10px;
   line-height: 1.2;
   font-family: 'Poppins', sans-serif;
+  color: #f4f7be;
 }
 
 .landing .header p {
@@ -57,11 +59,12 @@ body {
   margin-right: 15px;
   font-family: 'Inter', sans-serif;
   font-size: 20px;
+  color: #ffffff;
 }
 
 .landing .get-started {
-  background-color: #1E000E;
-  color: white;
+  background-color: #f4f7be;
+  color: #1E000E;
   border: none;
   padding: 10px 20px;
   border-radius: 20px;
@@ -71,8 +74,8 @@ body {
 }
 
 .landing .login-button, .landing .signup-button {
-  background-color: #1E000E;
-  color: white;
+  background-color: #f4f7be;
+  color: #1E000E;
   border: none;
   padding: 10px 20px;
   border-radius: 20px;
@@ -82,8 +85,8 @@ body {
 }
 
 .landing .login-button:hover, .landing .signup-button:hover, .landing .get-started:hover {
-  background-color: #ccc;
-  color: black;
+  background-color: #e5f77d53;
+  color: rgb(255, 255, 255);
 }
 
 .landing .right-columns {
@@ -126,7 +129,7 @@ body {
 
 .landing .stat-item p, .landing .title-item p {
   font-size: 0.9em;
-  color: #666;
+  color: #ffffff;
   font-family: 'Inter', sans-serif;
 }
 
@@ -157,11 +160,11 @@ body {
 }
 
 .landing .collab-img-first {
-  border-radius: 40px 0 0 40px;
+  border-radius: 10px 0 0 10px;
 }
 
 .landing .collab-img-last {
-  border-radius: 0 40px 40px 0;
+  border-radius: 0 10px 10px 0;
 }
 
 /* Responsive design */

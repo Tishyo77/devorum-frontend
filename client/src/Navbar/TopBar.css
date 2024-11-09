@@ -20,13 +20,13 @@
   cursor: pointer;
 }
 
-.search-bar {
+.top-bar .search-bar {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.search-type-dropdown {
+.top-bar .search-type-dropdown {
   padding: 9.5px;
   border: 1px solid #000;
   border-right: none;
@@ -35,7 +35,7 @@
   outline: none;
 }
 
-.search-bar input {
+.top-bar .search-bar input {
   padding: 8px;
   border: 1px solid #000;
   border-left: none;
@@ -44,7 +44,7 @@
   outline: none;
 }
 
-.suggestions-list {
+.top-bar .suggestions-list {
   position: absolute;
   top: 100%;
   left: 0;
@@ -58,7 +58,7 @@
   z-index: 1002;
 }
 
-.suggestion-item {
+.top-bar .suggestion-item {
   display: flex;
   align-items: center;
   padding: 10px;
@@ -66,7 +66,7 @@
   transition: background-color 0.2s;
 }
 
-.suggestion-avatar {
+.top-bar .suggestion-avatar {
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -74,20 +74,20 @@
   object-fit: cover;
 }
 
-.actions {
+.top-bar .actions {
   display: flex;
   align-items: center;
   gap: 15px;
 }
 
-.profile-button {
+.top-bar .profile-button {
   display: flex;
   align-items: center;
   cursor: pointer;
 }
 
-.profile-photo,
-.placeholder-avatar {
+.top-bar .profile-photo,
+.top-bar .placeholder-avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -101,7 +101,7 @@
   color: #555;
 }
 
-.new-idea-button {
+.top-bar .new-idea-button {
   display: flex;
   align-items: center;
   background-color: #007bff00;
@@ -116,17 +116,17 @@
   margin-right: 10px;
 }
 
-.new-idea-button:hover {
+.top-bar .new-idea-button:hover {
   background-color: #b39e0033;
 }
 
-.new-idea-icon {
+.top-bar .new-idea-icon {
   width: 40px;
   height: 40px;
   margin-right: 8px;
 }
 
-.profile-dropdown {
+.top-bar .profile-dropdown {
   position: absolute;
   top: 60px;
   right: 20px;
@@ -138,34 +138,34 @@
   margin: 0;
 }
 
-.profile-dropdown ul {
+.top-bar .profile-dropdown ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.profile-dropdown ul li {
+.top-bar .profile-dropdown ul li {
   padding: 10px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
 }
 
-.profile-dropdown ul li:hover {
+.top-bar .profile-dropdown ul li:hover {
   background-color: #f0f0f0;
 }
 
-.search-input-container {
+.top-bar .search-input-container {
   position: relative;
   display: inline-block;
   width: 100%;
 }
 
-.search-input-container input {
+.top-bar .search-input-container input {
   width: 100%;
   padding-right: 40px; 
 }
 
-.search-icon {
+.top-bar .search-icon {
   position: absolute;
   right: 10px; 
   top: 50%;

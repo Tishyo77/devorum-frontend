@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SignUpPage.css';
-import avatarPaths from '../Avatars'; 
+import avatarPaths from '../Avatars';
+import DefaultAvatar from '../Avatars/DefaultAvatar.png'; // Import Default Avatar
 import api from '../api';
 
 const SignUpPart3 = () => {
@@ -12,7 +13,7 @@ const SignUpPart3 = () => {
     location: '',
     bio: '',
   });
-  const [selectedAvatar, setSelectedAvatar] = useState('');
+  const [selectedAvatar, setSelectedAvatar] = useState(DefaultAvatar); // Set default avatar
   const [showAvatarSelection, setShowAvatarSelection] = useState(false);
   const [usernameExists, setUsernameExists] = useState(false);
 
@@ -57,7 +58,7 @@ const SignUpPart3 = () => {
       const token = localStorage.getItem('token');
       const storedEmail = localStorage.getItem('signUpEmail');
       await api.put('/user', {
-        email: storedEmail, 
+        email: storedEmail,
         update: {
           user_name: formData.username,
           gender: formData.gender,
@@ -91,6 +92,9 @@ const SignUpPart3 = () => {
         </div>
         {showAvatarSelection && (
           <div className="avatar-selection-window">
+            <button className="close-button" onClick={() => setShowAvatarSelection(false)}>
+              Close
+            </button>
             <div className="avatar-selection">
               {avatarPaths.map((avatar, index) => (
                 <img

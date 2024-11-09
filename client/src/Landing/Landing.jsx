@@ -5,7 +5,7 @@ import Collab1 from '../assets/Collab1.jpg';
 import Collab2 from '../assets/Collab2.jpg';
 import Collab3 from '../assets/Collab3.jpg';
 import Collab4 from '../assets/Collab4.jpg';
-import Logo from '../assets/Logo.png';
+import Logo from '../assets/LogoLight.png';
 import HeartIcon from '../assets/Connect.png'; 
 import StarIcon from '../assets/Collaborate.png'; 
 import ClockIcon from '../assets/Create.png';  

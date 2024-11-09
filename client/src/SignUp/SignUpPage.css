@@ -1,76 +1,76 @@
 .signup-page {
-  background-color: #ffffff;
+  background-color: #E5F77D;
   color: rgb(0, 0, 0);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .signup-page h2 {
   text-align: center;
   margin-top: 2%;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
-.navbar {
+.signup-page .navbar {
   display: flex;
   justify-content: space-between;
   margin: 3%;
   margin-top: 10px;
   margin-bottom: 0%;
   padding-bottom: 10px;
-  border-bottom: 2px solid #ccc;
+  border-bottom: 2px solid #000000;
 }
 
-.logo {
+.signup-page .logo {
   display: flex;
   width: 20%;
 }
 
-.logo img {
+.signup-page .logo img {
   width: 200px;
 }
 
-.signup-container {
+.signup-page .signup-container {
   width: 100%;
   max-width: 600px;
   margin: 5%;
   margin-top: 20px;
   padding: 40px;
-  background-color: #f6f6f6;
+  background-color: #f4f7be;
   border-radius: 10px;
 }
 
-.signup-part {
+.signup-page .signup-part {
   width: 100%;
 }
 
-.signup-part p {
+.signup-page .signup-part p {
   font-size: 15px;
   margin-bottom: 20px;
 }
 
-form {
+.signup-page form {
   display: flex;
   flex-direction: column;
 }
 
-.form-group {
+.signup-page .form-group {
   margin-bottom: 0.5rem;
   position: relative;
 }
 
-.form-group label {
+.signup-page .form-group label {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: bold;
 }
 
-.form-group input,
-.form-group select,
-.form-group textarea {
+.signup-page .form-group input,
+.signup-page .form-group select,
+.signup-page .form-group textarea {
   width: 100%;
   padding: 0.25rem;
   border-radius: 4px;
@@ -78,19 +78,19 @@ form {
   box-sizing: border-box;
 }
 
-.form-group.error input {
+.signup-page .form-group.error input {
   border: 1px solid red;
 }
 
-.error-message {
+.signup-page .error-message {
   color: red;
   margin-top: 0.5rem;
   font-size: 0.875rem;
 }
 
-button {
+.signup-page button {
   padding: 0.75rem;
-  background-color: #007bff;
+  background-color: #1E000E;
   color: white;
   border: none;
   border-radius: 4px;
@@ -98,12 +98,12 @@ button {
   margin-top: 1rem;
 }
 
-button:hover {
-  background-color: #0056b3;
+.signup-page button:hover {
+  background-color: #1e000e75;
 }
 
-.google-button {
-  background-color: #4285f4;
+.signup-page .google-button {
+  background-color: #1E000E;
   color: white;
   border: none;
   padding: 0.75rem;
@@ -114,30 +114,30 @@ button:hover {
   margin-top: 1rem;
 }
 
-.google-button:hover {
-  background-color: #357ae8;
+.signup-page .google-button:hover {
+  background-color: #1e000e75;
 }
 
-.or-divider {
+.signup-page .or-divider {
   text-align: center;
   margin: 1rem 0;
 }
 
-.login-prompt {
+.signup-page .login-prompt {
   text-align: center;
   margin-top: 1rem;
 }
 
-.login-prompt a {
+.signup-page .login-prompt a {
   color: #007bff;
   text-decoration: none;
 }
 
-.login-prompt a:hover {
+.signup-page .login-prompt a:hover {
   text-decoration: underline;
 }
 
-.suggestions {
+.signup-page .suggestions {
   border: 1px solid #ccc;
   border-radius: 4px;
   background: white;
@@ -150,62 +150,60 @@ button:hover {
   z-index: 1000; /* Ensure suggestions appear above other elements */
 }
 
-.suggestion {
+.signup-page .suggestion {
   padding: 0.5rem;
   cursor: pointer;
 }
 
-.suggestion:hover {
-  background-color: #007bff;
-  color: white;
+.signup-page .suggestion:hover {
+  background-color: #e9e9e9;
+  color: rgb(0, 0, 0);
 }
 
-.selected-skills {
+.signup-page .selected-skills {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-top: 0.5rem;
+  margin-top: 20px;
 }
 
-.selected-skill {
-  background-color: #007bff;
+.signup-page .selected-skill {
+  height: 40px;
+  background-color: #1E000E;
   color: white;
-  padding: 5px;
+  padding: 10px;
   border-radius: 4px;
   display: flex;
   align-items: center;
 }
 
-.selected-skill button {
-  background: none;
-  border: none;
-  color: white;
-  margin-left: 0.5rem;
+.signup-page .selected-skill button {
+  background-color: #007bff00;
+  padding: 0;
+  margin-bottom: 17px;
+  color: rgb(255, 0, 0);
+  margin-left: 20px;
   cursor: pointer;
 }
 
-.selected-skill button:hover {
-  color: red;
-}
-
 /* Styles for avatar selection */
-.profile-avatar {
+.signup-page .profile-avatar {
   display: flex;
   justify-content: center;
   margin-bottom: 1rem;
 }
 
-.selected-avatar {
+.signup-page .selected-avatar {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  border: 2px solid #007bff;
+  border: none;
 }
 
-.choose-avatar-button {
+.signup-page .choose-avatar-button {
   display: block;
   margin: 0 auto;
-  background-color: #007bff;
+  background-color: #1E000E;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -213,11 +211,11 @@ button:hover {
   cursor: pointer;
 }
 
-.choose-avatar-button:hover {
-  background-color: #0056b3;
+.signup-page .choose-avatar-button:hover {
+  background-color: #1e000e75;
 }
 
-.avatar-selection-window {
+.signup-page .avatar-selection-window {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -229,20 +227,29 @@ button:hover {
   z-index: 1000;
 }
 
-.avatar-selection {
+.signup-page .avatar-selection {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
 
-.avatar {
-  width: 50px;
-  height: 50px;
+.signup-page .avatar {
+  width: 75px;
+  height: 75px;
   border: 2px solid transparent;
   border-radius: 50%;
   cursor: pointer;
 }
 
-.avatar:hover {
-  border-color: #007bff;
+.signup-page .avatar:hover {
+  border-color: none;
+}
+
+.signup-page .close-button {
+  background-color: #1E000E;
+  border: none;
+  color: #ffffff;
+  font-size: 1rem;
+  cursor: pointer;
+  align-self: flex-end;
 }
