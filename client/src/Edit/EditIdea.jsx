@@ -102,11 +102,11 @@ const EditIdea = () => {
                                     value={idea.status}
                                     onChange={handleInputChange}
                                 >
-                                    <option value="Abandoned">Abandoned</option>
-                                    <option value="Completed">Completed</option>
-                                    <option value="On Hold">On Hold</option>
-                                    <option value="Searching">Searching</option>
-                                    <option value="Found">Found</option>
+                                    <option value="abandoned">Abandoned</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="on hold">On Hold</option>
+                                    <option value="searching">Searching</option>
+                                    <option value="found">Found</option>
                                 </select>
                             </div>
                         </div>

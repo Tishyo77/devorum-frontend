@@ -5,7 +5,7 @@ import api from '../api';
 const NewIdea = ({ onClose, onSubmit }) => {
   const [title, setTitle] = useState('');
   const [idea, setIdea] = useState('');
-  const [status, setStatus] = useState('Searching');
+  const [status, setStatus] = useState('searching');
   const [forumName, setForumName] = useState('');
   const [forumSuggestions, setForumSuggestions] = useState([]);
   const [forums, setForums] = useState([]);
@@ -125,11 +125,11 @@ const NewIdea = ({ onClose, onSubmit }) => {
         <label>
           Status:
           <select value={status} onChange={(e) => setStatus(e.target.value)}>
-            <option value="Searching">Searching</option>
-            <option value="Found">Found</option>
-            <option value="Completed">Completed</option>
-            <option value="On Hold">On Hold</option>
-            <option value="Abandoned">Abandoned</option>
+            <option value="searching">Searching</option>
+            <option value="found">Found</option>
+            <option value="completed">Completed</option>
+            <option value="on hold">On Hold</option>
+            <option value="abandoned">Abandoned</option>
           </select>
         </label>
         <label>
