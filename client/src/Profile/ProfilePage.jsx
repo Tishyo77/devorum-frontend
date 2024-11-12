@@ -16,6 +16,7 @@ const ProfilePage = () => {
   const [userBio, setUserBio] = useState(null);
   const [userSkills, setUserSkills] = useState([]);
   const [userCerts, setUserCerts] = useState([]);
+  const [userEmail, setUserEmail] = useState([]);
   const [connectionStatus, setConnectionStatus] = useState(null);
   const [connectionId, setConnectionId] = useState(null);
   const user = localStorage.getItem('user');
@@ -59,6 +60,7 @@ const ProfilePage = () => {
         setUserQual(response.data[0].qualification);
         setUserAvatar(response.data[0].profile_photo);
         setUserBio(response.data[0].bio);
+        setUserEmail(response.data[0].email)
 
         const skillsArray = response.data[0].skills_temp.split(',').map(skill => skill.trim());
         setUserSkills(skillsArray);
@@ -188,6 +190,7 @@ const ProfilePage = () => {
                 <h2>{username}</h2>
                 <p>Role: {userRole}</p>
                 <p>Qualification: {userQual}</p>
+                {connectionStatus === 'Connected' && <p>Email: {userEmail}</p>}
               </div>
               <div className="profile-bio">
                 <p>{userBio}</p>
