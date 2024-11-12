@@ -156,8 +156,8 @@ const Ideas = ({ ideas, setIdeas, currentUser, userId }) => {
               <a href={`/profile/${post.user_name}`} className="username">
                 <span className="username">{post.user_name}</span>
               </a>
-              <span className="forum">{post.forum_name}</span>
               <span className={`status ${post.status.toLowerCase().replace(/ /g, '-')}`}>{post.status}</span>
+              <span className="forum">{post.forum_title}</span>
               <div className="post-meta">
                 <span>{calculateTimeAgo(post.created_at)}</span>
               </div>  

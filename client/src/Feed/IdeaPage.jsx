@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'; // Import useParams
+import { useParams } from 'react-router-dom';
 import './FeedPage.css';
 import TopBar from '../Navbar/TopBar';
 import SideBar from '../Navbar/SideBar';
@@ -9,10 +9,8 @@ import Ideas from '../Ideas/Ideas';
 const IdeaPage = () => {
   const [idea, setIdea] = useState(null);
   const [userId, setUserId] = useState(null);
-
   const currentUser = localStorage.getItem("user");
-  
-  const { idea_id } = useParams(); 
+  const { idea_id } = useParams();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -41,7 +39,11 @@ const IdeaPage = () => {
         const interestResponse = await api.get(`/interest/user_id/${userId}`);
         const isInterested = interestResponse.data.some(row => row.ideas_id == idea_id);
 
-        setIdea({ ...ideaData, user_name, profile_photo, isInterested });
+        // Fetch forum title based on forum_id
+        const forumResponse = await api.get(`/forum/${ideaData.forum_id}`);
+        const forum_title = "d/" + forumResponse.data[0].devorum;
+
+        setIdea({ ...ideaData, user_name, profile_photo, isInterested, forum_title });
       } catch (error) {
         console.error("Error fetching idea data:", error);
       }

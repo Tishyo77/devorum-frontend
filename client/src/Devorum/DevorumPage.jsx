@@ -11,7 +11,9 @@ const DevorumPage = () => {
   const [forumData, setForumData] = useState(null);
   const [ideas, setIdeas] = useState([]);
   const [userId, setUserId] = useState(null);
-  const [isJoined, setIsJoined] = useState(false); // Track if user is joined in the forum
+  const [isJoined, setIsJoined] = useState(false); // Track if user has joined the forum
+  const [hasMoreIdeas, setHasMoreIdeas] = useState(true); // Track if there are more ideas to load
+  const [page, setPage] = useState(1); // Track the page for pagination
 
   const currentUser = localStorage.getItem("user");
 
@@ -35,15 +37,19 @@ const DevorumPage = () => {
         const forumResponse = await api.get(`/forum/devorum/${devorum}`);
         setForumData(forumResponse.data);
 
-        // Fetch the forums the user has joined using the new API route
         const joinedForumsResponse = await api.get(`/forum-joined/user/${userId}`);
         const joinedForums = joinedForumsResponse.data;
-
-        // Check if the current forum is in the user's joined forums
         const isForumJoined = joinedForums.some(forum => forum.forums_id === forumResponse.data.forum_id);
         setIsJoined(isForumJoined);
 
-        const ideasResponse = await api.get(`/idea/forum/${forumResponse.data.forum_id}`);
+        const ideasResponse = await api.get(`/idea/forum/${forumResponse.data.forum_id}/recent`, {
+          params: { limit: 20, page }
+        });
+
+        if (ideasResponse.data.length < 20) {
+          setHasMoreIdeas(false);
+        }
+
         const ideasWithUserDetails = await Promise.all(
           ideasResponse.data.map(async (idea) => {
             const userResponse = await api.get(`/user/${idea.user_id}`);
@@ -52,12 +58,12 @@ const DevorumPage = () => {
 
             const interestResponse = await api.get(`/interest/user_id/${userId}`);
             const isInterested = interestResponse.data.some(row => row.ideas_id === idea.idea_id);
-            console.log(isInterested);
 
             return { ...idea, user_name, profile_photo, isInterested };
           })
         );
-        setIdeas(ideasWithUserDetails);
+
+        setIdeas((prevIdeas) => [...prevIdeas, ...ideasWithUserDetails]);
       } catch (error) {
         console.error("Error fetching forum data:", error);
       }
@@ -66,18 +72,20 @@ const DevorumPage = () => {
     if (userId) {
       fetchForumData();
     }
-  }, [devorum, userId]);
+  }, [devorum, userId, page]);
+
+  const loadMoreIdeas = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
 
   const handleJoinToggle = async () => {
     try {
       if (isJoined) {
-        // If already joined, delete the forum joined entry
         await api.delete('/forum-joined', { data: { user_id: userId, forum_id: forumData.forum_id } });
-        setIsJoined(false); // Change button to Join
+        setIsJoined(false);
       } else {
-        // If not joined, create a forum joined entry
         await api.post('/forum-joined', { user_id: userId, forum_id: forumData.forum_id });
-        setIsJoined(true); // Change button to Joined
+        setIsJoined(true);
       }
     } catch (error) {
       console.error("Error toggling forum join status:", error);
@@ -109,6 +117,16 @@ const DevorumPage = () => {
             currentUser={currentUser}
             userId={userId}
           />
+
+          {hasMoreIdeas ? (
+            <div className="load-more-container">
+              <button onClick={loadMoreIdeas} className="load-more-button">
+                Load More
+              </button>
+            </div>
+          ) : (
+            <p className="end-message">You did it! You reached the end!</p>
+          )}
         </div>
       </div>
     </div>

@@ -68,6 +68,7 @@ const SideBar = () => {
   const handleForumClick = (forumName) => {
     console.log(forumName);
     navigate(`/devorum/${forumName}`); 
+    window.location.reload();
   };
 
   return (

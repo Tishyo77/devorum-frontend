@@ -8,7 +8,6 @@ import Ideas from '../Ideas/Ideas';
 const InterestedIdeas = () => {
   const [ideas, setIdeas] = useState([]);
   const [userId, setUserId] = useState(null);
-
   const currentUser = localStorage.getItem("user");
 
   useEffect(() => {
@@ -33,6 +32,9 @@ const InterestedIdeas = () => {
         const interestResponse = await api.get(`/interest/user_id/${userId}`);
         const interestedIdeaIds = interestResponse.data.map(row => row.ideas_id); // Array of interested idea_ids
 
+        // Cache for forum titles
+        const forumTitleCache = new Map();
+
         const ideasWithDetails = await Promise.all(
           interestedIdeaIds.map(async (idea_id) => {
             const ideaResponse = await api.get(`/idea/id/${idea_id}`);
@@ -42,7 +44,17 @@ const InterestedIdeas = () => {
             const user_name = userResponse.data[0].user_name;
             const profile_photo = userResponse.data[0].profile_photo;
 
-            return { ...idea, user_name, profile_photo, isInterested: true };
+            // Retrieve forum title, checking the cache first
+            let forum_title;
+            if (forumTitleCache.has(idea.forum_id)) {
+              forum_title = forumTitleCache.get(idea.forum_id);
+            } else {
+              const forumResponse = await api.get(`/forum/${idea.forum_id}`);
+              forum_title = "d/" + forumResponse.data[0].devorum;
+              forumTitleCache.set(idea.forum_id, forum_title);
+            }
+
+            return { ...idea, user_name, profile_photo, isInterested: true, forum_title };
           })
         );
 

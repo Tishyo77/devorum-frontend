@@ -8,6 +8,9 @@ import Ideas from '../Ideas/Ideas';
 const FeedPage = () => {
   const [ideas, setIdeas] = useState([]);
   const [userId, setUserId] = useState(null);
+  const [page, setPage] = useState(1); // Start at page 1
+  const [loading, setLoading] = useState(false); // Track loading state
+  const [hasMore, setHasMore] = useState(true); // Track if there are more ideas to load
   const currentUser = localStorage.getItem("user");
 
   useEffect(() => {
@@ -25,44 +28,66 @@ const FeedPage = () => {
   }, [currentUser]);
 
   useEffect(() => {
-    const fetchIdeasFromJoinedForums = async () => {
+    const fetchUserFeed = async () => {
+      if (!userId || loading) return;
+  
       try {
-        const forumsResponse = await api.get(`/forum-joined/user/${userId}`);
-        const forumIds = forumsResponse.data.map(forum => forum.forums_id);
-        console.log(forumIds);
-        const ideasResponses = await Promise.all(
-          forumIds.map(forumId =>
-            api.get(`/idea/forum/${forumId}`)
-          )
-        );
-
-        const allIdeas = ideasResponses.flatMap(response => response.data);
-
-        const ideasWithUserDetails = await Promise.all(
-          allIdeas.map(async (idea) => {
-            const userResponse = await api.get(`/user/${idea.user_id}`);
-            const user_name = userResponse.data[0].user_name;
-            const profile_photo = userResponse.data[0].profile_photo;
-
-            const interestResponse = await api.get(`/interest/user_id/${userId}`);
-            const isInterested = interestResponse.data.some(row => row.ideas_id === idea.idea_id);
-
-            return { ...idea, user_name, profile_photo, isInterested };
-          })
-        );
-
-        const sortedIdeas = ideasWithUserDetails.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
-        setIdeas(sortedIdeas);
+        setLoading(true);
+        const limit = 20; // Desired limit of ideas per page
+        const feedResponse = await api.get(`idea/user/${userId}/feed`, {
+          params: { limit, page }
+        });
+  
+        // If there are no ideas in the response, we've reached the end
+        if (feedResponse.data.length === 0) {
+          setHasMore(false);
+        } else {
+          // Cache to store forum titles based on forum_id
+          const forumTitleCache = new Map();
+  
+          const ideasWithUserDetails = await Promise.all(
+            feedResponse.data.map(async (idea) => {
+              const userResponse = await api.get(`/user/${idea.user_id}`);
+              const user_name = userResponse.data[0].user_name;
+              const profile_photo = userResponse.data[0].profile_photo;
+  
+              const interestResponse = await api.get(`/interest/user_id/${userId}`);
+              const isInterested = interestResponse.data.some(row => row.ideas_id === idea.idea_id);
+  
+              // Retrieve forum title only if not already in cache
+              let forum_title;
+              if (forumTitleCache.has(idea.forum_id)) {
+                forum_title = forumTitleCache.get(idea.forum_id);
+              } else {
+                const forumResponse = await api.get(`/forum/${idea.forum_id}`);
+                forum_title = "d/" + forumResponse.data[0].devorum;
+                forumTitleCache.set(idea.forum_id, forum_title);
+              }
+  
+              return { ...idea, user_name, profile_photo, isInterested, forum_title };
+            })
+          );
+  
+          // Append new ideas to the existing list
+          setIdeas(prevIdeas => [...prevIdeas, ...ideasWithUserDetails]);
+        }
       } catch (error) {
-        console.error("Error fetching ideas from joined forums:", error);
+        console.error("Error fetching user feed:", error);
+      } finally {
+        setLoading(false);
       }
     };
+  
+    fetchUserFeed();
+  }, [userId, page]);
+  
 
-    if (userId) {
-      fetchIdeasFromJoinedForums();
+  // Handler for loading more ideas
+  const loadMoreIdeas = () => {
+    if (hasMore && !loading) {
+      setPage(prevPage => prevPage + 1);
     }
-  }, [userId]);
+  };
 
   return (
     <div className="feed-page">
@@ -76,6 +101,16 @@ const FeedPage = () => {
             currentUser={currentUser}
             userId={userId}
           />
+          {/* Load More Button or End Message */}
+          {hasMore ? (
+            <div className="load-more-container">
+              <button onClick={loadMoreIdeas} className="load-more-button">
+                Load More
+              </button>
+            </div>
+          ) : (
+            <p className="end-message">You did it! You reached the end!</p>
+          )}
         </div>
       </div>
     </div>

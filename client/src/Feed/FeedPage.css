@@ -77,3 +77,24 @@
 .page-details h2 {
   font-family: 'Montserrat', sans-serif;
 }
+
+.end-message {
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.2em;
+  color: #323232;
+}
+
+.load-more-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.load-more-button {
+  font-family: 'Montserrat', sans-serif;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+}
