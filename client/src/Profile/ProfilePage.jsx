@@ -62,11 +62,16 @@ const ProfilePage = () => {
         setUserBio(response.data[0].bio);
         setUserEmail(response.data[0].email)
 
-        const skillsArray = response.data[0].skills_temp.split(',').map(skill => skill.trim());
+        const skillsArray = response.data[0].skills.split(',').map(skill => skill.trim());
         setUserSkills(skillsArray);
 
-        const certificationsArray = response.data[0].certifications.split(',').map(certification => certification.trim());
-        setUserCerts(certificationsArray);
+        try {
+          const certificationsResponse = await api.get(`/certification/${response.data[0].user_id}`);
+          const certificationsArray = certificationsResponse.data;
+          setUserCerts(certificationsArray);
+        } catch (error) {
+          console.error('Error fetching certifications:', error.message);
+        }
       } else {
         throw new Error('No user data found');
       }
@@ -80,7 +85,6 @@ const ProfilePage = () => {
     try {
       const senderResponse = await api.post('/user/user_name', { user_name: user });
       const sender_id = senderResponse.data[0].user_id;
-      // Fetch profile user ID
       const receiverResponse = await api.post('/user/user_name', { user_name: profileUsername });
       const receiver_id = receiverResponse.data[0].user_id;
 
@@ -229,8 +233,10 @@ const ProfilePage = () => {
               <div className="certifications-list">
                 {userCerts.map((cert, index) => (
                   <div key={index} className="certification">
-                    <span className="certification-name">{cert}</span>
-                    <a href="https://www.google.com" className="verify-button">Verify</a>
+                    <span className="certification-name">{cert.title}</span>
+                    <a href={cert.link} className="verify-button" target="_blank" rel="noopener noreferrer">
+                      Verify
+                    </a>
                   </div>
                 ))}
               </div>
