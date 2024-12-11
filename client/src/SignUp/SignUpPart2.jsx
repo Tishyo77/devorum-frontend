@@ -14,9 +14,7 @@ const qualifications = [
 ];
 
 const allSkills = [
-  'JavaScript', 'React', 'Node.js', 'CSS', 'HTML', 'Python', 'Java', 'C++',
-  'SQL', 'NoSQL', 'AWS', 'Docker', 'Kubernetes', 'Git', 'Agile', 'Scrum',
-  'DevOps', 'Machine Learning', 'Data Science', 'UI/UX Design'
+  'Python', 'Java', 'C++', 'JavaScript', 'Ruby', 'PHP', 'Go', 'Swift', 'Kotlin', 'R', 'HTML', 'CSS', 'React.js', 'Angular', 'Vue.js', 'Node.js', 'ASP.NET', 'Swift', 'Objective-C', 'Flutter', 'Unity', 'Unreal Engine', 'C#', 'SQL', 'NoSQL', 'PostgreSQL', 'MySQL', 'Firebase', 'RESTful APIs', 'GraphQL', 'Selenium', 'JUnit', 'Appium', 'Cypress', 'Jenkins', 'Git', 'Docker', 'Kubernetes', 'CI/CD pipelines', 'Ansible', 'Terraform', 'AWS', 'Microsoft Azure', 'Google Cloud Platform', 'GitHub', 'GitLab', 'Bitbucket', 'Pandas', 'NumPy', 'Excel', 'Tableau', 'Power BI', 'Matplotlib', 'Seaborn', 'Scikit-learn', 'TensorFlow', 'PyTorch', 'Keras', 'CNNs', 'RNNs', 'Transformers', 'spaCy', 'NLTK', 'Hadoop', 'Spark', 'Hive', 'Pig', 'Apache Airflow', 'ETL pipelines', 'Snowflake', 'Databricks', 'R', 'SAS', 'MATLAB', 'Stata', 'Looker', 'QlikView', 'Cognos', 'Firewalls', 'IDS/IPS', 'VPNs', 'Penetration testing', 'Metasploit', 'Burp Suite', 'Kali Linux', 'SSL/TLS', 'PKI', 'AES', 'RSA', 'Okta', 'Active Directory', 'LDAP', 'SIEM tools', 'Wireshark', 'Nessus', 'Cisco routers', 'Juniper switches', 'Windows Server', 'Linux Server', 'Apache', 'Nginx', 'VMware', 'Hyper-V', 'VirtualBox', 'Veeam', 'Acronis', 'PowerShell', 'Bash Scripting', 'Chef', 'Puppet', 'AutoCAD', 'SolidWorks', 'CATIA', 'Fusion 360', 'MakerBot', 'Ultimaker', 'Formlabs', 'PCB design', 'KiCAD', 'Eagle', 'Altium Designer', 'Arduino', 'Raspberry Pi', 'ESP32', 'ROS', 'Gazebo', 'Simulink', 'MQTT', 'CoAP', 'ThingSpeak', 'Photoshop', 'Illustrator', 'CorelDRAW', 'Premiere Pro', 'Final Cut Pro', 'DaVinci Resolve', 'Blender', 'Maya', '3ds Max', 'Figma', 'Sketch', 'Adobe XD', 'Axure', 'After Effects', 'Cinema 4D', 'Jira', 'Trello', 'Monday.com', 'Asana', 'SAP', 'Oracle ERP', 'NetSuite', 'Salesforce', 'HubSpot', 'Zoho', 'Solidity', 'Ethereum', 'Hyperledger', 'Smart contracts', 'Reinforcement learning', 'Generative AI', 'Qiskit', 'Cirq', 'Quantum Development Kit', 'Oculus SDK', 'Unity VR', 'Vuforia'
 ];
 
 const SignUpPart2 = ({ nextPart, skipPart }) => {
@@ -76,23 +74,47 @@ const SignUpPart2 = ({ nextPart, skipPart }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
       const token = localStorage.getItem('token');
       const storedEmail = localStorage.getItem('signUpEmail');
+      
+      // Step 1: Update user details
       await api.put('/user', {
         email: storedEmail,
         update: {
           roles: formData.role,
           qualification: formData.qualification,
-          skills_temp: selectedSkills.join(','),
-          certifications: certifications.map(cert => cert.name).join(','),
+          skills: selectedSkills.join(','),
         },
       }, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      const userIdResponse = await api.post('/user/email', { email: storedEmail }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const userId = userIdResponse.data[0].user_id;
+
+      console.log(userId);
+
+      for (const cert of certifications) {
+        await api.post('/certification', {
+          title: cert.name,
+          link: cert.link,
+          user_id: userId,
+        }, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      }
+
       nextPart();
     } catch (error) {
       console.error('An error occurred while updating user details:', error);

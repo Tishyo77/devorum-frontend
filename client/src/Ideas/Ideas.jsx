@@ -204,7 +204,7 @@ const Ideas = ({ ideas, setIdeas, currentUser, userId }) => {
       {modalOpen && (
         <div className="modal">
           <div className="modal-content">
-            <h2>Interested Users</h2>
+            <h2 className="interested-users">Interested Users</h2>
             {interestedUsers.length > 0 ? (
               <ul>
                 {interestedUsers.map((user, index) => (
