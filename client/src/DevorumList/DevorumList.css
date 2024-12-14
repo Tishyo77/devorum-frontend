@@ -1,0 +1,33 @@
+.search-container {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .search-details {
+    background-color: #1E000E;
+    color: #fff;
+    padding: 30px;
+    margin-bottom: 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .search-details h1 {
+    min-width: 30%;
+    max-width: 45%;
+    padding: 20px;
+    color: #1E000E;
+    align-content: center;
+    border-radius: 10px;
+    background-color: #f0c674;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .search-details p {
+    max-width: 50%;
+    margin: 0;
+    text-align: justify;
+    font-family: 'Poppins', sans-serif;
+  }

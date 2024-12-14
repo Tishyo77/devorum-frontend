@@ -48,7 +48,7 @@ const TopBar = () => {
       navigate(`/user/search?query=${username}`);
     } else if (searchType === 'Forum' && searchQuery.startsWith('d/')) {
       const forumQuery = searchQuery.slice(2).toLowerCase(); 
-      navigate(`/forums/${forumQuery}`);
+      navigate(`/devorum/search?query=${forumQuery}`);
     }
   };
 

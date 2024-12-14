@@ -13,6 +13,7 @@ import IdeaPage from './Feed/IdeaPage';
 import EditIdea from './Edit/EditIdea';
 import IdeaResults from './SearchResults/IdeaResults';
 import UserResults from './SearchResults/UserResults';
+import DevorumResults from './SearchResults/DevorumResults';
 import ConnectionsPage from './SearchResults/ConnectionsPage';
 
 // Higher-order component to protect routes
@@ -40,6 +41,7 @@ const App = () => {
         <Route path="edit-idea/:idea_id" element={<ProtectedRoute element={<EditIdea />} />} />
         <Route path="/idea/search" element={<ProtectedRoute element={<IdeaResults />} />} />
         <Route path="/user/search" element={<ProtectedRoute element={<UserResults />} />} />
+        <Route path="/devorum/search" element={<ProtectedRoute element={<DevorumResults />} />} />
         <Route path="connected" element={<ProtectedRoute element={<ConnectionsPage />} />} />
       </Routes>
     </Router>
