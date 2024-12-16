@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './ProfilePage.css';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import TopBar from '../Navbar/TopBar';
 import SideBar from '../Navbar/SideBar';
+import EditProfileModal from './EditProfileModal';
 import api from '../api';
 
 const ProfilePage = () => {
+  const navigate = useNavigate(); 
   const { username } = useParams();
   const [localUserName, setLocalUserName] = useState('');
   const [userData, setUserData] = useState(null);
@@ -20,6 +23,7 @@ const ProfilePage = () => {
   const [connectionStatus, setConnectionStatus] = useState(null);
   const [connectionId, setConnectionId] = useState(null);
   const user = localStorage.getItem('user');
+  const [isModalOpen, setModalOpen] = useState(false); // Modal state
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -176,7 +180,7 @@ const ProfilePage = () => {
   };
 
   const handleEdit = () => {
-    console.log('Edit button clicked!');
+    setModalOpen(true); // Open the modal
   };
 
   return (
@@ -202,7 +206,9 @@ const ProfilePage = () => {
             </div>
             <div className="profile-actions">
               {username === localUserName ? (
-                <button className="action-button edit-button">Edit</button>
+                <button className="action-button edit-button" onClick={handleEdit}>
+                  Edit
+                </button>
               ) : (
                 <button
                   onClick={
@@ -242,6 +248,16 @@ const ProfilePage = () => {
               </div>
             </div>
           </div>
+          <EditProfileModal
+            isOpen={isModalOpen}
+            onClose={() => setModalOpen(false)}
+            onSave={() => {
+              fetchUserData(username); 
+              setModalOpen(false); 
+            }}
+            userData={userData}
+            userCerts={userCerts}
+          />
         </div>
       </div>
     </div>
