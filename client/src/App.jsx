@@ -5,7 +5,6 @@ import Landing from './Landing/Landing';
 import SignUp from './SignUp/SignUpPage';
 import Login from './Login/LoginPage';
 import Profile from './Profile/ProfilePage';
-//import EditProfile from './Profile/EditProfile';
 import Feed from './Feed/FeedPage';
 import Devorum from './Devorum/DevorumPage';
 import Home from './Feed/HomePage';
@@ -34,7 +33,6 @@ const App = () => {
 
         {/* Protected Routes */}
         <Route path="profile/:username" element={<ProtectedRoute element={<Profile />} />} />
-        
         <Route path="devorum/:devorum" element={<ProtectedRoute element={<Devorum />} />} />
         <Route path="feed" element={<ProtectedRoute element={<Feed />} />} />
         <Route path="home" element={<ProtectedRoute element={<Home />} />} />

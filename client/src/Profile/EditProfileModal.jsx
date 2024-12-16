@@ -55,6 +55,7 @@ const EditProfileModal = ({ isOpen, onClose, onSave, userData = {}, userCerts = 
     if (isOpen && userData) {
       setFormData({
         name: userData[0]?.name || '',
+        bio: userData[0]?.bio || '',
         role: userData[0]?.roles || '',
         qualification: userData[0]?.qualification || '',
       });
@@ -93,6 +94,7 @@ const EditProfileModal = ({ isOpen, onClose, onSave, userData = {}, userCerts = 
         email,
         update: {
           name: data.name,
+          bio: data.bio,
           roles: data.role,
           qualification: data.qualification,
           skills: data.skills,
@@ -165,13 +167,22 @@ const EditProfileModal = ({ isOpen, onClose, onSave, userData = {}, userCerts = 
       <div className="edit-modal">
         <h2>Edit Profile</h2>
         <form>
-        <div className="form-group">
+          <div className="form-group">
             <label htmlFor="name">Name:</label>
             <input
               type="text"
               id="name"
               value={formData.name}
               onChange={(e) => handleChange('name', e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="bio">Bio:</label>
+            <input
+              type="text-area"
+              id="bio"
+              value={formData.bio}
+              onChange={(e) => handleChange('bio', e.target.value)}
             />
           </div>
           <div className="form-group">

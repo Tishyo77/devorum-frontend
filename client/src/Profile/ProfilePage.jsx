@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import TopBar from '../Navbar/TopBar';
 import SideBar from '../Navbar/SideBar';
 import EditProfileModal from './EditProfileModal';
+import EditAvatarModal from './EditAvatarModal'; 
+import EditIcon from '../assets/Edit.png';
 import api from '../api';
 
 const ProfilePage = () => {
@@ -22,8 +24,9 @@ const ProfilePage = () => {
   const [userEmail, setUserEmail] = useState([]);
   const [connectionStatus, setConnectionStatus] = useState(null);
   const [connectionId, setConnectionId] = useState(null);
+  const [isModalOpen, setModalOpen] = useState(false); 
+  const [isEditAvatarOpen, setEditAvatarOpen] = useState(false);
   const user = localStorage.getItem('user');
-  const [isModalOpen, setModalOpen] = useState(false); // Modal state
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -183,6 +186,23 @@ const ProfilePage = () => {
     setModalOpen(true); // Open the modal
   };
 
+  const handleSaveAvatar = async (newAvatar) => {
+    try {
+      const email = userData[0].email;
+      await api.put('/user/', {
+        email,
+        update: { profile_photo: newAvatar },
+      });
+
+      setUserAvatar(newAvatar);
+      setEditAvatarOpen(false);
+      alert('Avatar updated successfully');
+    } catch (error) {
+      console.error('Error updating avatar:', error);
+      alert('Failed to update avatar. Please try again.');
+    }
+  };
+
   return (
     <div className="profile-page">
       <TopBar />
@@ -191,7 +211,15 @@ const ProfilePage = () => {
         <div className="profile-container">
           <div className="profile-header">
             <div className="profile-picture">
-              <img src={userAvatar} alt="Profile" />
+              <img src={userAvatar} alt="Profile" className="profile"/>
+              {username === localUserName && (
+                <button
+                  className="edit-icon-button"
+                  onClick={() => setEditAvatarOpen(true)}
+                >
+                  <img src={EditIcon} alt="Edit" className="edit-icon" />
+                </button>
+              )}
             </div>
             <div className="profile-details">
               <div className="profile-info">
@@ -257,6 +285,11 @@ const ProfilePage = () => {
             }}
             userData={userData}
             userCerts={userCerts}
+          />
+          <EditAvatarModal
+            isOpen={isEditAvatarOpen}
+            onClose={() => setEditAvatarOpen(false)}
+            onSave={handleSaveAvatar}
           />
         </div>
       </div>

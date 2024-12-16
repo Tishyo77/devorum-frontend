@@ -1,0 +1,57 @@
+.edit-avatar-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+  }
+  
+  .edit-avatar-modal  .modal-content {
+    background: #edff85;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+  }
+  
+  .edit-avatar-modal  .avatars-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+  }
+  
+  .edit-avatar-modal .avatar-option {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .edit-avatar-modal  .avatar-option:hover {
+    transform: scale(1.1);
+    border: 2px solid #edff85;
+  }
+  
+  .edit-avatar-modal  .close-modal-button {
+    background: #1E000E;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .edit-avatar-modal  .close-button:hover {
+    background: #28001391;
+  }
+  
