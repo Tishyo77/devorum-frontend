@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; 
 import logo from '../assets/Logo.png';
-import newIdeaIcon from '../assets/NewIdea.png'; // Import the New Idea icon
-import searchIcon from '../assets/Search.png';  // Import the Search icon
+import newIdeaIcon from '../assets/NewIdea.png'; 
+import searchIcon from '../assets/Search.png';  
 import './TopBar.css';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
@@ -13,7 +13,9 @@ const TopBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState('');
-  const [dropdownVisible, setDropdownVisible] = useState(false); // Dropdown visibility
+  const [email, setEmail] = useState('');
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false); // Delete modal state
 
   useEffect(() => {
     const fetchUserProfilePhoto = async () => {
@@ -23,6 +25,7 @@ const TopBar = () => {
           const response = await api.post('/user/user_name', { user_name: username });
           if (response.data && response.data.length > 0) {
             setProfilePhoto(response.data[0].profile_photo);
+            setEmail(response.data[0].email);
           }
         } catch (error) {
           console.error('Error fetching profile photo from backend:', error);
@@ -37,7 +40,6 @@ const TopBar = () => {
     setDropdownVisible(!dropdownVisible); 
   };
 
-  // Function to handle the search when Enter key or Search icon is clicked
   const handleSearch = () => {
     if (!searchQuery) return;
 
@@ -63,11 +65,11 @@ const TopBar = () => {
     setSearchType(type);
 
     if (type === 'User') {
-      setSearchQuery('@'); // Prefill with '@' for user search
+      setSearchQuery('@'); 
     } else if (type === 'Forum') {
-      setSearchQuery('d/'); // Prefill with 'd/' for forum search
+      setSearchQuery('d/'); 
     } else {
-      setSearchQuery(''); // Clear for ideas
+      setSearchQuery('');
     }
   };
 
@@ -107,7 +109,27 @@ const TopBar = () => {
     } else if (option === 'Log Out') {
       localStorage.clear();
       navigate('/'); 
+    } else if (option === 'Delete Account') {
+      setDeleteModalVisible(true); 
     }
+  };
+
+  const handleDeleteConfirm = async () => {
+    try { 
+      const response = await api.delete('/user/', { data: { email } });
+      if (response.status === 201) {
+        console.log('Account deleted successfully');
+        localStorage.clear();
+        navigate('/'); 
+      }
+    } catch (error) {
+      console.error('Error deleting account:', error);
+    }
+    setDeleteModalVisible(false); 
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteModalVisible(false); 
   };
 
   return (
@@ -131,13 +153,13 @@ const TopBar = () => {
             placeholder="Search..." 
             value={searchQuery} 
             onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={handleSearchKeyPress}  // Trigger search on Enter key press
+            onKeyDown={handleSearchKeyPress} 
           />
           <img 
             src={searchIcon} 
             alt="Search Icon" 
             className="search-icon" 
-            onClick={handleSearch}  // Trigger search on Search icon click
+            onClick={handleSearch}  
           />
         </div>
       </div>
@@ -156,12 +178,25 @@ const TopBar = () => {
               <li onClick={() => handleOptionClick('Connections')}>Connections</li>
               <li onClick={() => handleOptionClick('Interested Ideas')}>Interested Ideas</li>
               <li onClick={() => handleOptionClick('Log Out')}>Log Out</li>
+              <li onClick={() => handleOptionClick('Delete Account')}>Delete Account</li>
             </ul>
           </div>
         )}
       </div>
 
       {showModal && <NewIdea onClose={handleModalClose} onSubmit={handleIdeaSubmit} />}
+
+      {deleteModalVisible && (
+        <div className="delete-modal">
+          <div className="modal-content">
+            <h2>Are you sure you want to delete your account?</h2>
+            <div className="modal-actions">
+              <button onClick={handleDeleteConfirm}>Yes</button>
+              <button onClick={handleDeleteCancel}>No</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
