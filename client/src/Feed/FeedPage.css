@@ -86,6 +86,14 @@
   color: #323232;
 }
 
+.no-results-message {
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.2em;
+  color: #323232;
+}
+
 .load-more-container {
   display: flex;
   justify-content: center;

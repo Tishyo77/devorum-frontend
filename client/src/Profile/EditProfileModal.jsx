@@ -156,6 +156,17 @@ const EditProfileModal = ({ isOpen, onClose, onSave, userData = {}, userCerts = 
     );
   };
 
+  const handleAddSkill = (skill) => {
+    setSelectedSkills((prev) => [...prev, skill]);
+    setAvailableSkills((prev) => prev.filter((s) => s !== skill));
+    setSearchTerm(''); // Reset the search term after adding
+  };
+
+  const handleRemoveSkill = (skill) => {
+    setSelectedSkills((prev) => prev.filter((s) => s !== skill));
+    setAvailableSkills((prev) => [...prev, skill]);
+  };
+
   const filteredSkills = searchTerm
     ? availableSkills.filter((skill) =>
         skill.toLowerCase().includes(searchTerm.toLowerCase())

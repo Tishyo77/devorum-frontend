@@ -233,6 +233,12 @@ const ProfilePage = () => {
               </div>
             </div>
             <div className="profile-actions">
+            <button
+              className="action-button ideas-button"
+              onClick={() => navigate(`/ideas/${username}`)}
+            >
+              Ideas
+            </button>
               {username === localUserName ? (
                 <button className="action-button edit-button" onClick={handleEdit}>
                   Edit
@@ -257,22 +263,43 @@ const ProfilePage = () => {
             <div className="skills">
               <h3>Skills:</h3>
               <div className="skills-list">
-                {userSkills.map((skill, index) => (
-                  <span key={index} className="skill">{skill}</span>
-                ))}
+                {userSkills.length > 0 && userSkills != "" ? (
+                  userSkills.map((skill, index) => (
+                    <span key={index} className="skill">{skill}</span>
+                  ))
+                ) : (
+                  <div className="no-skills">
+                    Looks like {username} has a serious case of skill issue!
+                  </div>
+                )}
               </div>
             </div>
             <div className="certifications">
               <h3>Certifications:</h3>
               <div className="certifications-list">
-                {userCerts.map((cert, index) => (
-                  <div key={index} className="certification">
-                    <span className="certification-name">{cert.title}</span>
-                    <a href={cert.link} className="verify-button" target="_blank" rel="noopener noreferrer">
-                      Verify
-                    </a>
+                {userCerts.length > 0 ? (
+                  userCerts.map((cert, index) => (
+                    <div key={index} className="certification">
+                      <span className="certification-name">{cert.title}</span>
+                      <a
+                        href={
+                          cert.link.startsWith('http://') || cert.link.startsWith('https://')
+                            ? cert.link
+                            : `https://${cert.link}`
+                        }
+                        className="verify-button"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Verify
+                      </a>
+                    </div>
+                  ))
+                ) : (
+                  <div className="no-certificates">
+                    It would appear {username} has no certifications!
                   </div>
-                ))}
+                )}
               </div>
             </div>
           </div>

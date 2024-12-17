@@ -10,6 +10,7 @@ import Devorum from './Devorum/DevorumPage';
 import Home from './Feed/HomePage';
 import InterestedIdeas from './Feed/InterestedIdeas';
 import IdeaPage from './Feed/IdeaPage';
+import UserIdeasPage from './Feed/UserIdeasPage';
 import EditIdea from './Edit/EditIdea';
 import IdeaResults from './SearchResults/IdeaResults';
 import UserResults from './SearchResults/UserResults';
@@ -36,6 +37,7 @@ const App = () => {
         <Route path="devorum/:devorum" element={<ProtectedRoute element={<Devorum />} />} />
         <Route path="feed" element={<ProtectedRoute element={<Feed />} />} />
         <Route path="home" element={<ProtectedRoute element={<Home />} />} />
+        <Route path="ideas/:username" element={<ProtectedRoute element={<UserIdeasPage />} />} />
         <Route path="interested-ideas" element={<ProtectedRoute element={<InterestedIdeas />} />} />
         <Route path="ideas/:idea_id" element={<ProtectedRoute element={<IdeaPage />} />} />
         <Route path="edit-idea/:idea_id" element={<ProtectedRoute element={<EditIdea />} />} />
